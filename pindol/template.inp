@@ -1,0 +1,110 @@
+# This is a template input file for running the program pindol.
+# Remember that this file must me renamed as "pindol.inp".
+# Contributors:
+#   - Paolo Nicolini (Czech Technical University in Prague), paolo.nicolini22@gmail.com
+
+# ATOMS section, MANDATORY
+# Here the atomic types are defined.
+ATOMS
+  # First line must contain the keyword "types" and
+  # a number specifying how many different atomic kinds are in the system.
+  types 1 
+  # Then, one line per atomic type, specifing the atomic symbol and mass (in amu).
+  atom Zr 91.224
+END_ATOMS
+
+# REFCONF command, MANDATORY
+# Here the equilibrium unit cell is specified.
+# It can be provided in LAMMPS data (atomic style only)...
+REFCONF lammpsdata POSCAR.data
+# ... or POSCAR formats (not both!).
+#REFCONF poscar POSCAR 
+
+# UNITS command, MANDATORY
+# Here the units used in reading the configurations are specified.
+# Two values are accepted: "real" and "metal"
+# (following the LAMMPS convention, see https://docs.lammps.org/units.html).
+# The basic difference between the two is about time units: ps for the former, fs for the latter.
+UNITS metal
+
+# INITCONF command
+# Here the initial configuration of the supercell
+# (cell, positions and possibly velocities) is specified.
+# It can be provided in LAMMPS data (atomic style only)...
+INITCONF lammpsdata init.data
+# ... or POSCAR formats (not both!).
+#INITCONF poscar POSCAR_INIT
+
+# INITVEL command
+# This command initializes the atomic velocities according to the
+# Boltzmann distribution at a specific temperature (first number), and
+# a seed for the random number generator must be provided as well (second number).
+INITVEL 300.0 1234 
+
+# DISTORT command
+# This command applies random displacement to the atomic positions;
+# a seed for the random number generator (first number),
+# and a maximum diplacement amplitude in Ang (second number) must be provided.
+# There are two (mutually exclusive) modes implemented:
+# applying the displacements to all atoms...
+DISTORT 1234 0.1 all
+# ...or specifing along which normal modes the distortions will be applied.
+#DISTORT 1234 0.1 2  1 4  2 3
+
+# READRESTART command
+# If specified, the code will read the state of a previous run and use it a starting point
+# (if provided together with the INITCONF command, the last one will be ignored).
+READRESTART init.restart
+
+# ND section
+# Here it is possible to specify the settings for the normal dynamics run.
+# Dynamics in the NVE or NVT ensemble can be performed.
+ND
+  # For NVE dynamics, only put the keyword "nve".
+  nve
+  # For NVT dynamics with a Nose'-Hoover thermostat:
+  # the first two numbers are the initial and final temperatures in K, 
+  # the third one is a characteristic (dimensionless) relaxation time
+  # (following the LAMMPS spirit, see https://docs.lammps.org/fix_nh.html,
+  # but remember that here it is provided in a dimensionless form,
+  # e.g. in LAMMPS the user can provide $(100.0*dt), while here it should be "100.0" only!).
+  nvt 300.0 350.0 100.0
+  # This specifies the integration of the equations of motion:
+  # the first number is a time (not a time step in traditional sense, it is just a time unit!),
+  # according to units specified in the UNITS section,
+  # the second number identifies the method used by DVODE to integrate
+  # the equation of motions (possible implemented values are: 10 for
+  # nonstiff (Adams) method, 22 for stiff (BDF) method),
+  # then a keyword specifying the tolerance parameter is provided
+  # (possible values are: "rel" for relative tolerance,
+  # "abs" for absolute tolerance, or "both" for both),
+  # the last number is the value of the tolerance parameter.
+  integrator 0.0001 22 both 1.d-15
+  # The number of steps to be performed.
+  runsteps 100000
+  # The frequency of printing of the normal coordinates,
+  # together with output filename.
+  printcoord 10 normcoord.dat
+  # The frequency of printing of the normal velocities,
+  # together with output filename.
+  printvel 10 normvel.dat
+  # The frequency of printing of the normal accelerations,
+  # together with output filename.
+  printacc 10 normacc.dat
+END_ND
+
+# FINALCONF command
+# This command writes the final configuration at the end of the run.
+# It can be written in LAMMPS data (atomic style only)...
+FINALCONF lammpsdata final.data
+# ... or POSCAR formats (not both!).
+#FINALCONF poscar POSCAR_FINAL
+
+# WRITERESTART command
+# This command writes a restart file at the end of the run.
+WRITERESTART final.restart
+
+# END command, MANDATORY
+# Everything written after the END command is not read by the program.
+END
+
