@@ -1,0 +1,8 @@
+POSCAR                 # reference geometry
+normcoord.dat          # normal coordinates
+normacc.dat            # normal accelerations
+1                      # number of atomic types
+Si 28.0855             # atom_symbol mass [uma]
+0 5 1                  # initial time, final time, time skip
+
+
