@@ -36,72 +36,68 @@ END_ATOMS
 where the number of atomic types must preceed the list of the atoms. The ND block is optional, and specifies the ND run:
 
 ND
+
 nve # NVE ensemble
+
 or
+
 nvt double double double # NVT ensemble with initial and final temperature (K) followed by the step (K) used for a linear ramp change of the temperature; if initial and final temperatures are the same, the temperature is not changed during the simulation
 
-\texttt{integrator} \textit{double} 22 both 1.d-15 \# integration time step followed by the options for the \textsc{dvode} solver
+integrator double 22 both 1.d-15 # integration time step followed by the options for the textscdvode solver
 
-\texttt{runsteps} \textit{int} \# number of integration steps
+runsteps int # number of integration steps
 
-\texttt{printcoord} \textit{int} normcoord.dat \# writing frequency of the normal coordinats file (e.g. \texttt{normcoord.dat})
+printcoord int normcoord.dat # writing frequency of the normal coordinats file (e.g. normcoord.dat)
 
-\texttt{printvel} \textit{int} normvel.dat \# writing frequency of the normal velocities file (e.g. \texttt{normvel.dat})
+printvel int normvel.dat # writing frequency of the normal velocities file (e.g. normvel.dat)
 
-\texttt{printacc} \textit{int} normacc.dat \# writing frequency of the normal accelerations file (e.g. \texttt{normacc.dat})
+printacc int normacc.dat # writing frequency of the normal accelerations file (e.g. normacc.dat)
 
-END\_ND
-\vspace{0.2cm}
+END_ND
+vspace0.2cm
 
 Mandatory keywords are:
 
-\vspace{0.2cm}
-REFCONF \texttt{poscar/lammps} POSCAR \# reference geometry file (e.g. POSCAR) in POSCAR or LAMMPS format.
+vspace0.2cm
+REFCONF poscar/lammps POSCAR # reference geometry file (e.g. POSCAR) in POSCAR or LAMMPS format.
 
-UNITS \texttt{real/metal} \# units for the output; \texttt{real} = time in fs, energy in joule
-\vspace{0.2cm}
+UNITS real/metal # units for the output; real = time in fs, energy in joule
+vspace0.2cm
 
 Moreover, optional keywords can be specified:
 
-\vspace{0.2cm}
-DISTORT \textit{int double} \texttt{all} \# seed for the random number generation, maximum amplitude of atomic displacements in \AA{}, keyword ``all''
+vspace0.2cm
+DISTORT int double all # seed for the random number generation, maximum amplitude of atomic displacements in AA, keyword ``all''
 
 or, to distort the structure along specific normal coordinates
 
-DISTORT \textit{int double int int} $\dots$ \# seed for the random number generation, maximum amplitude of atomic displacements in \AA{}, number of normal modes along which the distortions will be applied, pair(s) specifying the $\bm{q}$-point and the mode
+DISTORT int double int int ... # seed for the random number generation, maximum amplitude of atomic displacements in AA, number of normal modes along which the distortions will be applied, pair(s) specifying the q-point and the mode
 
-INITCONF \texttt{poscar/lammps} POSCAR.init \# initial atom positions and velocities in POSCAR or \textsc{lammps} format are taken from the, e.g., POSCAR.init; the geometry must be a supercell commensurate with the $\{q\}$ set
-\vspace{0.1cm}
+INITCONF poscar/lammps POSCAR.init # initial atom positions and velocities in POSCAR or textsclammps format are taken from the, e.g., POSCAR.init; the geometry must be a supercell commensurate with the q-set
 
-INITVEL \textit{double int} \# velocities are initialized from a Gaussian distribution at the specified temperature; the next argument is the seed for the random number generator. Initial positions and velocities are written in the file specified by FINALCONF and the execution is terminated if the ND block is not provided.
-\vspace{0.1cm}
+INITVEL double int # velocities are initialized from a Gaussian distribution at the specified temperature; the next argument is the seed for the random number generator. Initial positions and velocities are written in the file specified by FINALCONF and the execution is terminated if the ND block is not provided.
 
-FINALCONF \texttt{poscar/lammps} final.vasp \# atom geometry and velocities calculated at the last step of the ND run or with the INITVEL keyword; the geometry is a supercell commensurate with the $\{\bm{q}\}$ set
-\vspace{0.1cm}
+FINALCONF poscar/lammps final.vasp # atom geometry and velocities calculated at the last step of the ND run or with the INITVEL keyword; the geometry is a supercell commensurate with the $bmq$ set
 
-WRITERESTART \texttt{final.restart} \# at the end  of the simulation, the restart file (e.g. \texttt{final.restart}) containing the final atom geometry and velocities is written; if the NVT ensemble is specified, the thermostat status is also written.
-\vspace{0.1cm}
+WRITERESTART final.restart # at the end  of the simulation, the restart file (e.g. final.restart) containing the final atom geometry and velocities is written; if the NVT ensemble is specified, the thermostat status is also written.
 
-READRESTART \texttt{init.restart} \# file (e.g. \texttt{init.restart}) used to continue the simulation
-\vspace{0.2cm}
-}
+READRESTART init.restart # file (e.g. init.restart) used to continue the simulation
 
-{\parindent0pt
 The last line of the setting file must contain the keywork END; any keyword after that is ignored.
-%
+
 The code is executed with the command
 
-\vspace{0.2cm}
-\texttt{pindol}
-\vspace{0.2cm}
+```
 
-The standard output contains information on the energy, the conserved quantity and the temperature at each time step.
-%
-If the environmental variable OMP\_NUM\_THREADS is specified, \texttt{pindol} exploits the OpenMP parallelization.
-}
+pindol
+
+```
+
+The standard output contains information on the energy, the conserved quantity and the temperature at each time step. If the environmental variable OMP_NUM_THREADS is specified, pindol exploits the OpenMP parallelization.
+
 ## Example
 
-XXX {Magari possiamo metterci lo zirconio? (il template.inp e' per Zr...)}
+XXX Magari possiamo metterci lo zirconio? (il template.inp e' per Zr...)
 
 ## Citation
 
@@ -114,4 +110,5 @@ A. Cammarata, M. Dasic and P. Nicolini, *Normal Dynamics: solving Newton’s equ
 A. Cammarata, M. Dasic and P. Nicolini, *Sampling dynamical trajectories in the reciprocal space*, Phys. Rev. B **XX**, XXXXX (XXXX) DOI: [xxx](https://doi.org/10.1103/xxx)
 
 where the formulation used to perform normal dynamics is reported.
+
 
