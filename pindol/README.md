@@ -44,17 +44,11 @@ nve # NVE ensemble
 or
 
 nvt double double double # NVT ensemble with initial and final temperature (K) followed by the step (K) used for a linear ramp change of the temperature; if initial and final temperatures are the same, the temperature is not changed during the simulation
-
 integrator double 22 both 1.d-15 # integration time step followed by the options for the textscdvode solver
-
 runsteps int # number of integration steps
-
 printcoord int normcoord.dat # writing frequency of the normal coordinats file (e.g. normcoord.dat)
-
 printvel int normvel.dat # writing frequency of the normal velocities file (e.g. normvel.dat)
-
 printacc int normacc.dat # writing frequency of the normal accelerations file (e.g. normacc.dat)
-
 END_ND
 ```
 
@@ -76,15 +70,10 @@ DISTORT int double all # seed for the random number generation, maximum amplitud
 or, to distort the structure along specific normal coordinates
 
 DISTORT int double int int ... # seed for the random number generation, maximum amplitude of atomic displacements in AA, number of normal modes along which the distortions will be applied, pair(s) specifying the q-point and the mode
-
 INITCONF poscar/lammps POSCAR.init # initial atom positions and velocities in POSCAR or textsclammps format are taken from the, e.g., POSCAR.init; the geometry must be a supercell commensurate with the q-set
-
 INITVEL double int # velocities are initialized from a Gaussian distribution at the specified temperature; the next argument is the seed for the random number generator. Initial positions and velocities are written in the file specified by FINALCONF and the execution is terminated if the ND block is not provided.
-
 FINALCONF poscar/lammps final.vasp # atom geometry and velocities calculated at the last step of the ND run or with the INITVEL keyword; the geometry is a supercell commensurate with the $bmq$ set
-
 WRITERESTART final.restart # at the end  of the simulation, the restart file (e.g. final.restart) containing the final atom geometry and velocities is written; if the NVT ensemble is specified, the thermostat status is also written.
-
 READRESTART init.restart # file (e.g. init.restart) used to continue the simulation
 ```
 
