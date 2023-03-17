@@ -40,11 +40,13 @@ XXX {Magari possiamo metterci lo zirconio? (il template.inp e' per Zr...)}
 
 ## Citation
 
- The users of PINDOL have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt).
- However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
- In this spirit, please cite
+The users of PINDOL have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt).
+However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
+In this spirit, please cite
 
- A. Cammarata, P. Nicolini, M. Dasic, T. Polcar, *XXX*, Phys. Rev. XXX **XXX**, XXX (XXX), DOI: [XXX](XXX)
+A. Cammarata, M. Dasic and P. Nicolini, *Normal Dynamics: solving Newton’s equations in the reciprocal space*, Phys. Rev. Lett **XX**, XXXXX (XXXX) DOI: [xxx](https://doi.org/10.1103/xxx)
 
- where the formulation used to perform normal dynamics is reported.
+A. Cammarata, M. Dasic and P. Nicolini, *Sampling dynamical trajectories in the reciprocal space*, Phys. Rev. B **XX**, XXXXX (XXXX) DOI: [xxx](https://doi.org/10.1103/xxx)
+
+where the formulation used to perform normal dynamics is reported.
 
