@@ -1,0 +1,10 @@
+POSCAR                     # reference geometry
+normcoord.dat              # normal coordinates;   "0" = no file to convert
+normvel.dat                # normal velocities;    "0" = no file to convert
+normacc.dat                # normal accelerations; "0" = no file to convert
+1                          # natom_types
+Si 28.0855
+0.0 4.0                    # time window: initial and final time
+0                          # "1" = use the last step of the input files
+                           # regardless the time window specified above
+                           # and write a POSCAR_last.vasp configuration
