@@ -49,6 +49,11 @@ $ phind
 
 After the execution, the file phi.nd is created, to be used with the main [pindol](https://github.com/acammarat/pindol/tree/main/pindol) code. The output file phi.qallowed.nd contains the (q,q',q'') triplets which satisfy the &Delta;(q+q'+q'') selection rule.
 
+
+## Example
+
+The *phind.inp* file is an example of input file. 
+
 ## Citation
 
 The users of PHIND have little formal obligations specified in the [GNU General Public License](http://www.gnu.org/copyleft/gpl.txt).
