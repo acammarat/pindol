@@ -56,7 +56,7 @@ The *phind.inp* file is an example of input file.
 
 ## Citation
 
-The users of PHIND have little formal obligations specified in the [GNU General Public License](http://www.gnu.org/copyleft/gpl.txt).
+The users of PHIND have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
 In this spirit, please cite
 
