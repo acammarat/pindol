@@ -1,4 +1,4 @@
-# nd2xyz
+# nd2hiphive
 
 Converts normal trajectories into XYZ format
 
@@ -8,7 +8,7 @@ The code requires a fortran compiler. After cloning, enter the folder and compil
 
 `make`
 
-If the compilation ends successfully, the executable nd2xyz is created.
+If the compilation ends successfully, the executable nd2hiphive is created.
 
 ## Usage
 
@@ -20,15 +20,14 @@ The format of the input file is
 ```
 
 string                  name of the POSCAR file
-string                  name of the normal coordinate file
-string                  name of the normal velocities file
-string                  name of the normal accelerations file
-int                     number of atomic types (natom_types)
+string                  name of the ND trajectory file
+string                  name of the ND Qddot file
+int                   number of atomic types (natom_types)
 string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) [uma] of atom type 1
 ...  ...
 string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) [uma] of atom type natom_types
-double double         time window: initial and final time
-flag                  1 = write POSCAR restart from last configuration
+double double double        initial time, final time, max skip time
+
 
 ```
 
@@ -36,24 +35,29 @@ where `int` is an integer number, `double` is a real number of type double, and 
 
 ```
 
-$ nd2xyz 
-            _ ____                 
-  _ __   __| |___ \__  ___   _ ____
- | '_ \ / _` | __) \ \/ / | | |_  /
- | | | | (_| |/ __/ >  <| |_| |/ / 
- |_| |_|\__,_|_____/_/\_\\__, /___|
-                         |___/     
-                           0.7
+$ nd2hiphive
+            _ ____  _     _       _     _           
+  _ __   __| |___ \| |__ (_)_ __ | |__ (_)_   _____ 
+ | '_ \ / _` | __) | '_ \| | '_ \| '_ \| \ \ / / _ \
+ | | | | (_| |/ __/| | | | | |_) | | | | |\ V /  __/
+ |_| |_|\__,_|_____|_| |_|_| .__/|_| |_|_| \_/ \___|
+                           |_|                      
+                                            0.7
 
-  Syntax: nd2xyz <setting file>
+ Syntax: nd2hiPhive <setting file>
 
 ```
 
-After the execution .xyz files are created, as requested by the user.
+After the execution, the following files are created:
+
+- ndhiPhive_prim.xyz the reference unit cell
+- ndhiPhive_prim_dir.vasp the reference unit cell in POSCAR format
+- ndhiPhive_superc.xyz the supercell commensurate with the q-point set
+- ndhiPhive_phonopy.py the python code to be added to the example fcs.py script, the latter used to call hiPhive and calculate the effective force constants
 
 ## Example
 
-The *nd2xyz.inp* file is an example of input file. 
+The *nd2hiphive.inp* file is an example of input file. The *fcs.py* file is an example of python script to execute hiPhive
 
 ## Citation
 
