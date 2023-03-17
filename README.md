@@ -6,7 +6,10 @@ Phonon-Inspired Normal Dynamics of Lattices
 The **pindol** package contains the following codes:
 
 - [**q4phind**](https://github.com/acammarat/pindol/tree/main/q4phind) Order a q-point set as GM, H, S, used to generate qmatrix.nd and freq.nd with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints) compatible with [PHIND](https://github.com/acammarat/pindol/tree/main/phind)
-- [**phind**](https://github.com/acammarat/pindol/tree/main/phind) Calculates the first order anharmonic interaction strength &Phi; to be used for the PINDOL code
+- [**phind**](https://github.com/acammarat/pindol/tree/main/phind) Calculate the first order anharmonic interaction strength &Phi; to be used for the [PINDOL](https://github.com/acammarat/pindol/tree/main/pindol) code
+- [**pindol**](https://github.com/acammarat/pindol/tree/main/pindol) Main code to perform Normal Dynamics simulations
+- [**nd2xyz**](https://github.com/acammarat/pindol/tree/main/nd2xyz) Converts normal trajectories into XYZ format
+- [**nd2hiphive**](https://github.com/acammarat/pindol/tree/main/nd2hiphive) Creates input files for [hiPhive](https://hiphive.materialsmodeling.org/) to extract the effective force constants
 
 ## Installation
 
