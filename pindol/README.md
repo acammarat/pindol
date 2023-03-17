@@ -35,6 +35,8 @@ END_ATOMS
 
 where the number of atomic types must preceed the list of the atoms. The ND block is optional, and specifies the ND run:
 
+```
+
 ND
 
 nve # NVE ensemble
@@ -54,19 +56,21 @@ printvel int normvel.dat # writing frequency of the normal velocities file (e.g.
 printacc int normacc.dat # writing frequency of the normal accelerations file (e.g. normacc.dat)
 
 END_ND
-vspace0.2cm
+```
 
 Mandatory keywords are:
 
-vspace0.2cm
-REFCONF poscar/lammps POSCAR # reference geometry file (e.g. POSCAR) in POSCAR or LAMMPS format.
+```
 
+REFCONF poscar/lammps POSCAR # reference geometry file (e.g. POSCAR) in POSCAR or LAMMPS format.
 UNITS real/metal # units for the output; real = time in fs, energy in joule
-vspace0.2cm
+
+```
 
 Moreover, optional keywords can be specified:
 
-vspace0.2cm
+```
+
 DISTORT int double all # seed for the random number generation, maximum amplitude of atomic displacements in AA, keyword ``all''
 
 or, to distort the structure along specific normal coordinates
@@ -82,6 +86,7 @@ FINALCONF poscar/lammps final.vasp # atom geometry and velocities calculated at 
 WRITERESTART final.restart # at the end  of the simulation, the restart file (e.g. final.restart) containing the final atom geometry and velocities is written; if the NVT ensemble is specified, the thermostat status is also written.
 
 READRESTART init.restart # file (e.g. init.restart) used to continue the simulation
+```
 
 The last line of the setting file must contain the keywork END; any keyword after that is ignored.
 
