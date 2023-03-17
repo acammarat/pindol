@@ -44,7 +44,7 @@ After the execution the file qordered.nd is created. The content can be pasted i
 
 ## Citation
 
-The users of EIGMAP have little formal obligations specified in the [GNU General Public License](http://www.gnu.org/copyleft/gpl.txt).
+The users of Q4PHIND have little formal obligations specified in the [GNU General Public License](http://www.gnu.org/copyleft/gpl.txt).
 However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
 In this spirit, please cite
 
