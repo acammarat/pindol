@@ -1,0 +1,6 @@
+POSCAR         # POSCAR unit cell
+3 3 3          # supercell dimensions
+1              # natom_types
+Si 28.085      # atomic symbol, mass [amu]
+0              # write (q,j -> l) map: 0=no, 1=yes
+1              # calc phi: 0=no, 1=yes
