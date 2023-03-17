@@ -1,14 +1,54 @@
-# PINDOL
-Phonon-Inspired Normal Dynamics Of Lattices
+# q4phind
 
-Suite of codes to perform dynamics in the reciprocal space.
+Orders a q-point set as GM, H, S, used to generate qmatrix.nd and freq.nd with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints) compatible with [PHIND](https://github.com/acammarat/pindol/tree/main/phind)
 
-- [**pindol**](https://github.com/acammarat/pindol/tree/main/pindol) Main code that performs dynamics in the NVE and NVT ensembles. 
+## Installation
 
-- [**phind**](https://github.com/acammarat/pindol/tree/main/phind) ...
+The code requires a fortran compiler. After cloning, enter the folder and compile it with
 
-- [**...**]
+`make`
 
-## Contributions, bug reports and feature requests
+If the compilation ends successfully, the executable q4phind is created.
 
-We are happy to accept contributions. To report bugs or request new features, please use the [Issue Tracker](https://github.com/acammarat/pindol/issues). If you use the programs in this repository in your work, please send an email to cammaant [at] fel.cvut.cz - we will collect them and put up a list of outputs.
+## Usage
+
+The format of the input file is
+
+
+```
+
+double double double  reduced components of the first q-point
+...
+double double double  reduced components of the last q-point
+
+```
+
+where `double` is a real number of type double. The command line syntax can be shown by using the `-h` option:
+
+```
+
+$ q4phind 
+       _  _       _                   
+  __ _| || |    _| |_              _  
+ / _` | || |_  /     \   _ __   __| | 
+| (_| |__   _|( (| |) ) | '_ \ / _` | 
+ \__, |  |_|   \_   _/  | | | | (_| | 
+    |_|          |_|    |_| |_|\__,_| 
+                              0.1
+
+ Syntax: q4phind <q-point set>
+
+```
+
+After the execution the file qordered.nd is created. The content can be pasted into the input file of [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints) at the point where the list of q-points is specified.
+
+## Citation
+
+The users of EIGMAP have little formal obligations specified in the [GNU General Public License](http://www.gnu.org/copyleft/gpl.txt).
+However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
+In this spirit, please cite
+
+A. Cammarata, M. Dasic and P. Nicolini, *Normal Dynamics: solving Newton’s equations in the reciprocal space*, Phys. Rev. Lett **XX**, XXXXX (XXXX) DOI: [xxx](https://doi.org/10.1103/xxx)
+
+A. Cammarata, M. Dasic and P. Nicolini, *Sampling dynamical trajectories in the reciprocal space*, Phys. Rev. B **XX**, XXXXX (XXXX) DOI: [xxx](https://doi.org/10.1103/xxx)
+
