@@ -4,7 +4,6 @@
 ! https://nano.cvut.cz/researchers/antonio-cammarata
 ! https://orcid.org/0000-0002-5691-0682
 ! 
-! Program to calculate the atomic character
 ! Order a q-point set as GM, H, S and remove possible complex-conjugated couples
 ! to generate qmatrix.nd and freq.nd compatible with phind v >= 4.3
 ! 
