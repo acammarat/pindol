@@ -6,6 +6,7 @@ Phonon-Inspired Normal Dynamics of Lattices
 The **pindol** package contains the following codes:
 
 - [**q4phind**](https://github.com/acammarat/pindol/tree/main/q4phind) Order a q-point set as GM, H, S, used to generate qmatrix.nd and freq.nd with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints) compatible with [PHIND](https://github.com/acammarat/pindol/tree/main/phind)
+- [**phind**](https://github.com/acammarat/pindol/tree/main/phind) Calculates the first order anharmonic interaction strength &Phi to be used for the PINDOL code
 
 ## Installation
 
