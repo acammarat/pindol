@@ -3,6 +3,10 @@ Phonon-Inspired Normal Dynamics of Lattices
 
 **pindol** is a package to performs atom dynamics in the NVE and NVT ensembles. It exploits the Normal Dynamics formalism, allowing to perform Ab Initio Molecular Dynamics at the cost of Molecular Dynamics.
 
+The **pindol** package contains the following codes:
+
+- [**q4phind**](https://github.com/acammarat/pindol/tree/main/q4phind) Order a q-point set as GM, H, S, used to generate qmatrix.nd and freq.nd with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints) compatible with [PHIND](https://github.com/acammarat/pindol/tree/main/phind)
+
 ## Installation
 
 The code requires a fortran compiler (tested with gfortran 11.3.0). After cloning, from this folder it is enough to type
