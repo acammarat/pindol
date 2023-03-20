@@ -54,7 +54,7 @@ After the execution, the following files are created:
 - *ndhiPhive_prim_dir.vasp* the reference unit cell in POSCAR format
 - *ndhiPhive_superc.xyz* the supercell commensurate with the q-point set
 - *ndhiPhive_phonopy.py* the python code to be added to the example fcs.py script, the latter used to call **hiPhive** and calculate the effective force constants
-- *ndhiPhive_dispfor.xyz* containing displacements (Ang) and forces (eV/Ang) at 
+- *ndhiPhive_dispfor.xyz* containing displacements (Ang) and forces (eV/Ang) at the extracted trajectory snapshots.
 
 ## Example
 
