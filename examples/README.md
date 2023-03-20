@@ -218,8 +218,25 @@ The files *normcoord.dat*, *normvel.dat* and *normacc.dat* specified in the inpu
 
 ## Analyse the results
 
-- nd2xyz can be used to extract a specific step to be used to restart the simulation from those coordinates and velocities
-...
+### Conversion of normal trajectory, velocities and accelerations in standard Cartesian .xyz format
+
+We assume that in the *pindol.inp* input file, we asked to create the files containing the normal coordinates, velocities and accelerations as *normcoord.dat*, *normvel.dat* and *normacc.dat*, respectively. In order to convert such files into Cartesian .xyz format, we will use [**nd2xyz**](https://github.com/acammarat/pindol/tree/main/nd2xyz). We then create the *nd2xyz.inp* input file which looks like
+
+```
+POSCAR                     # reference geometry
+normcoord.dat              # ND trajectory ; "0" = no file to convert
+normvel.dat                # qdot file     ; "0" = no file to convert
+normacc.dat                # qddot file    ; "0" = no file to convert
+1                          # natom_types
+Si 28.0855
+3000000 4000000            # time window: initial and final time
+0                          # "1" = use the last step of the input files
+                           # regardless the time window specified above
+                           # and write a POSCAR_last.vasp configuration
+
+In this example, we want to extract the last nanosecond of trajectory. The Cartesian trajectory (Ang), velocities (Ang/fs) and accelerations (Ang/fs<sup>2</sup>) are written in *ndtrj.xyz*, *ndvel.xyz* and *ndacc.xyz*, respectively. The file *ndtraj_ave.xyz* contains the average atomic position within the specified time window. Such files can then be used for postprocessing to extract any physical quantity as in usual standard Molecular Dynamics (MD) simulations.
+
+### Conversion of normal trajectory, velocities and accelerations in standard Cartesian .xyz format
 
 ## Contributions, bug reports and feature requests
 
