@@ -4,7 +4,7 @@ Converts normal trajectories into XYZ format
 
 ## Installation
 
-The code requires a fortran compiler. After cloning, enter the folder and compile it with
+The code requires a fortran compiler and the [lapack](https://netlib.org/lapack/) libraries. After cloning, enter the folder and compile it with
 
 `make`
 
