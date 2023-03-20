@@ -146,12 +146,79 @@ A very basic OpenMP parallelization is implemented in **pindol**, which can be e
 ```
 $ pindol | tee out
 ```
-where we chose to write the standard output also to the *out* file for convenience.
+where we choose to write the standard output also to the *out* file for convenience. The beginning of the output looks like this:
+
+```
+        _           _       _  
+  _ __ (_)_ __   __| | ___ | | 
+ | '_ \| | '_ \ / _` |/ _ \| | 
+ | |_) | | | | | (_| | (_) | | 
+ | .__/|_|_| |_|\__,_|\___/|_| 
+ |_|                           v1.0  
+
+Running on 1 threads
+Reading "pindol.inp"...
+  1 atomic type(s) selected: Si
+  'POSCAR' poscar reference configuration file will be read
+  real units selected
+  atomic velocities will be initialized at      10.0000 K
+  NVT dynamics selected at      10.0000 K with a Nose-Hoover thermostat and a characteristic timescale of     100.0000 fs
+  'final.vasp' poscar final configuration file will be written
+  'final.restart'  restart file will be written
+Reading "pindol.inp"...DONE.
+Reading reference configuration...
+  2 atoms found in the reference cell
+Reading reference configuration...DONE.
+Reading polarization vectors...
+  1 q-point found: (0,0,0)
+  2 q-point found: (1/2,0,0)
+  3 q-point found: (1/2,1/6,0)
+  4 q-point found: (1/2,1/3,0)
+  5 q-point found: (1/2,1/2,0)
+  6 q-point found: (1/2,1/3,1/6)
+  7 q-point found: (-1/3,1/2,1/6)
+  8 q-point found: (1/6,0,0)
+  9 q-point found: (1/3,0,0)
+  10 q-point found: (1/6,1/6,0)
+  11 q-point found: (1/3,1/6,0)
+  12 q-point found: (-1/3,1/6,0)
+  13 q-point found: (-1/6,1/6,0)
+  14 q-point found: (1/3,1/3,0)
+  15 q-point found: (-1/3,1/3,0)
+  16 q-point found: (-1/3,1/3,1/6)
+  Supercell size: 6 x 6 x 6
+Reading polarization vectors...DONE.
+Reading matrix of the phonon interaction strength...
+  5389 phi elements read
+Reading matrix of the phonon interaction strength...DONE.
+Setting up the supercell...
+  432 atoms in the supercell
+Setting up the supercell...DONE.
+Atomic velocities initialized at      10.0000 K.
+Performing normal dynamics...
+#             time    harm. potential energy anh. potential energy      potential_energy        kinetic_energy          total_energy    conserved_quantity   current_temperature
+   0.0000000000000       0.0000000000000       0.0000000000000       0.0000000000000       1.5216794479993       1.5216794479993       1.5216794479993       10.418215264719    
+   1.0000000000000      0.79488050631480E-02  0.17421750022140E-08  0.79488068053230E-02   1.5137244355497       1.5216732423551       1.5216794517577       10.363751078953    
+
+...
+```
+At the end of the execution, the output looks like
+
+```
+...
+   4000000.0000000      0.89127593451890     -0.27484485814697E-05  0.89127318607031      0.60773675481256       1.4990099408829       1.5212621755371       4.1608844387324    
+Performing normal dynamics...DONE.
+Writing the final configuration...DONE.
+Writing the restart file...DONE.
+Deallocating variables...DONE.
+Total run time is: 4 hours, 25 minutes, 11 seconds and 505 milliseconds.
+```
+The files *normcoord.dat*, *normvel.dat* and *normacc.dat* specified in the input are written incrementally during the run at the frequency specified in the corresponding keyword. Other files (e.g., final configuration, restart) are written as per user request.
 
 
 ## Analyse the results
 
-
+- nd2xyz can be used to extract a specific step to be used to restart the simulation from those coordinates and velocities
 ...
 
 ## Contributions, bug reports and feature requests
