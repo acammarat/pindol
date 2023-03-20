@@ -21,9 +21,13 @@ The codes require a fortran compiler (tested with gfortran 11.3.0). After clonin
 
 If the compilation ends successfully, the executable with the name of the code is created.
 
+## How to prepare, run and analyse a Normal Dynamics simulation
+
+The workflow on how to prepare, run and analyse a Normal Dynamics simulation can be found in the [example folder](https://github.com/acammarat/pindol/tree/main/examples).
+
 ## Usage
 
-For the usage, please refer to the related README.md file.
+For the usage of each code, please refer to the related README.md file.
 
 ## Citation
 
