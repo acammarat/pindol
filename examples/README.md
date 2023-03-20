@@ -233,10 +233,13 @@ Si 28.0855
 0                          # "1" = use the last step of the input files
                            # regardless the time window specified above
                            # and write a POSCAR_last.vasp configuration
+```
 
 In this example, we want to extract the last nanosecond of trajectory. The Cartesian trajectory (Ang), velocities (Ang/fs) and accelerations (Ang/fs<sup>2</sup>) are written in *ndtrj.xyz*, *ndvel.xyz* and *ndacc.xyz*, respectively. The file *ndtraj_ave.xyz* contains the average atomic position within the specified time window. Such files can then be used for postprocessing to extract any physical quantity as in usual standard Molecular Dynamics (MD) simulations.
 
 ### Conversion of normal trajectory, velocities and accelerations in standard Cartesian .xyz format
+
+
 
 ## Contributions, bug reports and feature requests
 
