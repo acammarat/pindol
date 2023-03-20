@@ -12,7 +12,7 @@ If the compilation ends successfully, the executable nd2hiphive is created.
 
 ## Usage
 
-The qmatrix.nd and freq.nd files of the reference geometry must be present in the folder where the code is executed.
+The *qmatrix.nd* and *freq.nd* files of the reference geometry must be present in the folder where the code is executed.
 
 The format of the input file is
 
@@ -20,12 +20,12 @@ The format of the input file is
 ```
 
 string                  name of the POSCAR file
-string                  name of the ND trajectory file
-string                  name of the ND Qddot file
+string                  name of the normal coordinates file
+string                  name of the normal accelerations file
 int                     number of atomic types (natom_types)
-string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) [uma] of atom type 1
+string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) (amu) of atom type 1
 ...  ...
-string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) [uma] of atom type natom_types
+string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) (amu) of atom type natom_types
 double double double    initial time, final time, max skip time
 
 
@@ -53,7 +53,7 @@ After the execution, the following files are created:
 - ndhiPhive_prim.xyz the reference unit cell
 - ndhiPhive_prim_dir.vasp the reference unit cell in POSCAR format
 - ndhiPhive_superc.xyz the supercell commensurate with the q-point set
-- ndhiPhive_phonopy.py the python code to be added to the example fcs.py script, the latter used to call hiPhive and calculate the effective force constants
+- ndhiPhive_phonopy.py the python code to be added to the example fcs.py script, the latter used to call **hiPhive** and calculate the effective force constants
 
 ## Example
 
