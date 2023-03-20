@@ -1,6 +1,6 @@
 # nd2hiphive
 
-Converts normal trajectories into XYZ format
+Processes the normal coordinate and acceleration files to produce the necessary input for [hiPhive](https://hiphive.materialsmodeling.org)
 
 ## Installation
 
