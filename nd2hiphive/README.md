@@ -50,10 +50,10 @@ $ nd2hiphive
 
 After the execution, the following files are created:
 
-- ndhiPhive_prim.xyz the reference unit cell
-- ndhiPhive_prim_dir.vasp the reference unit cell in POSCAR format
-- ndhiPhive_superc.xyz the supercell commensurate with the q-point set
-- ndhiPhive_phonopy.py the python code to be added to the example fcs.py script, the latter used to call **hiPhive** and calculate the effective force constants
+- *ndhiPhive_prim.xyz* the reference unit cell
+- *ndhiPhive_prim_dir.vasp* the reference unit cell in POSCAR format
+- *ndhiPhive_superc.xyz* the supercell commensurate with the q-point set
+- *ndhiPhive_phonopy.py* the python code to be added to the example fcs.py script, the latter used to call **hiPhive** and calculate the effective force constants
 
 ## Example
 
@@ -61,7 +61,7 @@ The *nd2hiphive.inp* file is an example of input file. The *fcs.py* file is an e
 
 ## Citation
 
-The users of ND2XYZ have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
+The users of **nd2hiphive** have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
 In this spirit, please cite
 
