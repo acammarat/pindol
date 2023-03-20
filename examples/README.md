@@ -142,7 +142,7 @@ WRITERESTART final.restart
 
 END
 ```
-A very basic OpenMP parallelization is implemented in **pindol**, which can be enabled by exporting the OMP_NUM_THREADS variable as done above for **phind**. We recommend to test the execution time over different values of the OMP_NUM_THREADS variable on a short run, in order to estimate in advance the optimal number of cores. The ND simulation is then performing by executing
+A very basic OpenMP parallelization is implemented in **pindol**, which can be enabled by exporting the OMP_NUM_THREADS variable as done above for **phind**. We recommend to test the execution time over different values of the OMP_NUM_THREADS variable on a short run, in order to estimate in advance the optimal number of cores. The ND simulation is then performed by executing
 ```
 $ pindol | tee out
 ```
