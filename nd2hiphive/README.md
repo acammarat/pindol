@@ -22,11 +22,11 @@ The format of the input file is
 string                  name of the POSCAR file
 string                  name of the ND trajectory file
 string                  name of the ND Qddot file
-int                   number of atomic types (natom_types)
+int                     number of atomic types (natom_types)
 string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) [uma] of atom type 1
 ...  ...
 string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) [uma] of atom type natom_types
-double double double        initial time, final time, max skip time
+double double double    initial time, final time, max skip time
 
 
 ```
