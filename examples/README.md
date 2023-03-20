@@ -276,6 +276,8 @@ which will call **hiPhive** and produce the FORCE_CONSTANTS and fc3.hdf5 files i
 
 <img src="https://github.com/acammarat/pindol/blob/main/examples/si/siband.png" width="640">
 
+Since we performed the ND simulation at 10K, the anharmonic contributions are negligible. The agreement with the finite displacement band structure then tells us that the q-set is able to properly sample the harmonic force constants.
+
 ## Contributions, bug reports and feature requests
 
 We are happy to accept contributions. To report bugs or request new features, please use the [Issue Tracker](https://github.com/acammarat/pindol/issues). If you use the programs in this repository in your work, please send an email to cammaant [at] fel.cvut.cz - we will collect them and put up a list of outputs.
