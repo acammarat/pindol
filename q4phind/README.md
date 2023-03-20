@@ -1,6 +1,6 @@
 # q4phind
 
-Orders a q-point set as GM, H, S, used to generate qmatrix.nd and freq.nd with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints) compatible with [PHIND](https://github.com/acammarat/pindol/tree/main/phind)
+Orders a q-point set as GM, H, S, used to generate *qmatrix.nd* and *freq.nd* with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints) and compatible with [PHIND](https://github.com/acammarat/pindol/tree/main/phind)
 
 ## Installation
 
@@ -36,7 +36,7 @@ $ q4phind
     |_|          |_|    |_| |_|\__,_| 
                               0.1
 
- Syntax: q4phind <q-point set>
+ Syntax: q4phind <q-point set file>
 
 ```
 
@@ -44,7 +44,7 @@ After the execution the file qordered.nd is created. The content can be pasted i
 
 ## Citation
 
-The users of Q4PHIND have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
+The users of **q4phind** have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
 In this spirit, please cite
 
