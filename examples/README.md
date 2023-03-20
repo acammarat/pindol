@@ -72,7 +72,7 @@ POSCAR          # reference geometry file
   -0.333333333333333    0.333333333333333    0.166666666666667
 ```
 
-where from the 6th line on we pasted the content of the *qordered.dat* file. The first line must contain the path to the phonopy executable including all the necessary options to run it; in this example, phonopy is found in one of the folders listed in the PATH variable. Be executing
+where from the 6th line on we pasted the content of the *qordered.dat* file. The first line must contain the path to the phonopy executable including all the necessary options to run it; in this example, phonopy is found in one of the folders listed in the PATH variable. By executing
 
 ```
 $ qpoints qpt.inp
