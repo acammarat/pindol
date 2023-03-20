@@ -23,7 +23,7 @@ If the compilation ends successfully, the executable with the name of the code i
 
 ## How to prepare, run and analyse a Normal Dynamics simulation
 
-The workflow on how to prepare, run and analyse a Normal Dynamics simulation can be found in the [example folder](https://github.com/acammarat/pindol/tree/main/examples).
+The workflow on how to prepare, run and analyse a Normal Dynamics simulation can be found in the [`examples` folder](https://github.com/acammarat/pindol/tree/main/examples).
 
 ## Usage
 
