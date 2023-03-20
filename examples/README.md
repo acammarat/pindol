@@ -77,7 +77,7 @@ where from the 6th line on we pasted the content of the *qordered.dat* file. The
 ```
 $ qpoints qpt.inp
 ```
-we generate the *qmatrix.nd* and *freq.nd* files.
+**qpoints** calls **phonopy** to generate the *qpoints.yaml* file and generates the *qmatrix.nd* and *freq.nd* files, which contain the eigenvectors and eigenfrequencies at each q-point specified in the set.
 
 ## Fourier transform of anharmonic force constants
 
