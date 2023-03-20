@@ -1,6 +1,6 @@
 # Workflow of Normal Dynamics simulations with PINDOL
 
-The main steps to run and analyse a Normal Dynamics (ND) simulation are the following:
+The main steps to run and analyse a Normal Dynamics (ND) simulation with **pindol** are the following:
 
 1. [Dynamical matrix diagonalization](#dynamical-matrix-diagonalization): generate *qmatrix.nd* and *freq.nd* with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints)
 2. [Fourier transform of anharmonic force constants](#fourier-transform-of-anharmonic-force-constants): generate *phi.nd* with [**phind**](https://github.com/acammarat/pindol/tree/main/phind)
