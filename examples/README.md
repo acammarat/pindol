@@ -242,7 +242,7 @@ In this example, we extract the last nanosecond of trajectory. The Cartesian tra
 
 ### Effective second- and third-order force constants
 
-We now want to obtain the effective force constants from the ND run as it is usually done with molecular dynamics simulations. To this aim, we need to collect displacements and forces, and provide them to any force constant calculator which makes use of fitting procedures. At the moment, we provide an interface to the [**hiPhive**](https://hiphive.materialsmodeling.org) software with the **nd2hiphive** code.
+We now want to obtain the effective force constants from the ND run as it is usually done with molecular dynamics simulations. To this aim, we need to collect displacements and forces, and provide them to any force constant calculator which makes use of fitting procedures. At the moment, we provide an interface to the [**hiPhive**](https://hiphive.materialsmodeling.org) software with the **nd2hiphive** code. For the relative installation, configuration and usage, the reader is referred to the **hiPhive** web pages.
 We assume that we created the *normcoord.dat* and *normacc.dat* files. We then prepare the *nd2hiphive.inp* input files accordingly
 ```
 POSCAR                 # reference geometry
@@ -268,7 +268,11 @@ The *fcs.py* script will serve us to call the **hiPhive** code. The *ndhiPhive_p
 ```
 # add here the content of ndhiPhive_phonopy.py created by nd2hiphive
 ```
-
+we have to add the content of the *ndhiPhive_phonopy.py* file as suggested. The file *ndhiPhive_prim_dir.vasp* contains the reference unit cell in POSCAR format only for convenience (e.g., visualization, check with the reference POSCAR...) and is not required for executing **hiPhive**. We then execute the script with
+```
+$ python fcs.py
+```
+which will call **hiPhive** and produce the FORCE_CONSTANTS and fc3.hdf5 files in **phonopy** format.
 
 ## Contributions, bug reports and feature requests
 
