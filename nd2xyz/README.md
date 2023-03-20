@@ -12,7 +12,7 @@ If the compilation ends successfully, the executable nd2xyz is created.
 
 ## Usage
 
-The qmatrix.nd and freq.nd files of the reference geometry must be present in the folder where the code is executed.
+The *qmatrix.nd* and *freq.nd* files of the reference geometry must be present in the folder where the code is executed.
 
 The format of the input file is
 
