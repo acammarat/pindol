@@ -272,7 +272,7 @@ we have to add the content of the *ndhiPhive_phonopy.py* file as suggested. The 
 ```
 $ python fcs.py
 ```
-which will call **hiPhive** and produce the FORCE_CONSTANTS and fc3.hdf5 files in **phonopy** format. For example, the FORCE_CONSTANTS can be used to calculate the phonon band dispersion to be compared with the one calculated with the finite displacement method:
+which will call **hiPhive** and produce the FORCE_CONSTANTS and fc3.hdf5 files in **phonopy** format with units eV/Ang<sup>2</sup> and eV/eV/Ang<sup>3</sup>, respectively. For example, the FORCE_CONSTANTS can be used to calculate the phonon band dispersion to be compared with the one calculated with the finite displacement method:
 
 <img src="https://github.com/acammarat/pindol/blob/main/examples/si/siband.png" width="640">
 
