@@ -38,21 +38,21 @@ Then we need to choose a list of q-points which constitutes the q-set; for examp
   -0.333333333333333    0.333333333333333    0.166666666666667
 ```
 
-which is the list of unique points contained in a 5x5x5 Mokhorst-Pack mesh obtained with the aid of the [SPGLIB](https://spglib.readthedocs.io/en/latest) library. Due to implementation reasons, the set must be ordered as G-H-S and does not contain complex-conjugated couples. To this aim, we can use the [q4phind](https://github.com/acammarat/pindol/tree/main/q4phind) code. If we image to write the above list into the file *qlist.dat*, we can then execute
+which is the list of unique points contained in a 6x6x6 Mokhorst-Pack mesh obtained with the aid of the [SPGLIB](https://spglib.readthedocs.io/en/latest) library. Due to implementation reasons, the set must be ordered as G-H-S and must not contain complex-conjugated couples. To this aim, we can use the [q4phind](https://github.com/acammarat/pindol/tree/main/q4phind) code. If we image to write the above list into the file *qlist.dat*, we can then execute
 
 ```
 $ q4phind qlist.dat
 ```
-which produces the *qordered.dat* file. Before proceding, we need to identify the 
+which produces the *qordered.dat* file. Since we include the &Gamma; point, before proceding we need to identify the acoustic modes to be excluded from the phonon-phonon scattering tensor to be calculated in the [next step](#fourier-transform-of-anharmonic-force-constants). To this aim, for example, we can visualize the eigenvectors pattern at &Gamma; by generating an .ascii file and visualize it with v_sim (see ["How to watch animation"](https://phonopy.github.io/phonopy/animation.html#how-to-watch-animation) in the phonopy website.). Let us imagine that the modes labeled as 1, 2 and 3 at &Gamma; are the acoustic ones; then, the list of (q,j) modes to skip is "1 1 1 2 1 3", where the first "1" of each couple refers to the first q-point in the *qordered.dat* list (i.e. &Gamma;) and the second number is the *j* label of the mode.
 
 We are then ready to prepare the *qpt.inp* file for **qpoints**:
 
 ```
-phonopy -c ab.in --abinit        # phonopy executable
-POSCAR          # unit cell
+phonopy         # phonopy executable
+POSCAR          # reference geometry file
 5 5 5           # mesh used to generate the FORCE_CONSTANTS file
 3               # nskip number of modes to skip
-1 1  1 2  1 3      # (q,j) list of modes to skip
+1 1  1 2  1 3   # (q,j) list of modes to skip
 16
    0.000000000000000    0.000000000000000    0.000000000000000
    0.500000000000000    0.000000000000000    0.000000000000000
@@ -72,7 +72,12 @@ POSCAR          # unit cell
   -0.333333333333333    0.333333333333333    0.166666666666667
 ```
 
+where from the 6th line on we pasted the content of the *qordered.dat* file. The first line must contain the path to the phonopy executable including all the necessary options to run it; in this example, phonopy is found in one of the folders listed in the PATH variable. Be executing
 
+```
+$ qpoints qpt.inp
+```
+we generate the *qmatrix.nd* and *freq.nd* files.
 
 ## Fourier transform of anharmonic force constants
 
