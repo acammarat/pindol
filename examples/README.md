@@ -1,13 +1,8 @@
-# PINDOL
-Phonon-Inspired Normal Dynamics Of Lattices
+# Workflow of Normal Dynamics simulations with PINDOL
 
-Suite of codes to perform dynamics in the reciprocal space.
+## Requirements
 
-- [**pindol**](https://github.com/acammarat/pindol/tree/main/pindol) Main code that performs dynamics in the NVE and NVT ensembles. 
-
-- [**phind**](https://github.com/acammarat/pindol/tree/main/phind) ...
-
-- [**...**]
+...
 
 ## Contributions, bug reports and feature requests
 
