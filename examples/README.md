@@ -252,7 +252,23 @@ normacc.dat            # Qdd file
 Si 28.0855             # atom_symbol mass (amu)
 3000000 4000000 700    # initial time, final time, time skip
 ```
-and run
+and run the code with the command
+```
+$ nd2hiphive nd2hiphive.inp
+```
+After the execution, the following files are created:
+
+- *ndhiPhive_prim.xyz* the reference unit cell
+- *ndhiPhive_prim_dir.vasp* the reference unit cell in POSCAR format
+- *ndhiPhive_superc.xyz* the supercell commensurate with the q-point set
+- *ndhiPhive_phonopy.py* the python code to be added to the fcs.py script
+- *ndhiPhive_dispfor.xyz* containing displacements (Ang) and forces (eV/Ang) at the extracted trajectory snapshots
+
+The *fcs.py* script will serve us to call the **hiPhive** code. The *ndhiPhive_prim.xyz*, *ndhiPhive_superc.xyz* and *ndhiPhive_superc.xyz* files are required by the script. We must edit *fcs.py*: after the line containing
+```
+# add here the content of ndhiPhive_phonopy.py created by nd2hiphive
+```
+
 
 ## Contributions, bug reports and feature requests
 
