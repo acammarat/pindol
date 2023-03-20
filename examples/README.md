@@ -13,7 +13,31 @@ At the moment, the geometry reference file must be created as [VASP](https://www
    
 ## Dynamical matrix diagonalization
 
-Let us assume
+The [qpoints](https://github.com/acammarat/phtools/tree/main/qpoints) code is used in this step. The harmonic force constants, eigenvectors and frequencies can be obtained, in principle, with any calculator. At the moment, only [PHONOPY]( https://phonopy.github.io/phonopy) is supported; for this reason, the following example will refer to its usage.
+
+First, we need to choose a list of q-points which constitutes the q-set; for example
+
+```
+   0.000000000000000    0.000000000000000    0.000000000000000
+   0.500000000000000    0.000000000000000    0.000000000000000
+   0.500000000000000    0.166666666666667    0.000000000000000
+   0.500000000000000    0.333333333333333    0.000000000000000
+   0.500000000000000    0.500000000000000    0.000000000000000
+   0.500000000000000    0.333333333333333    0.166666666666667
+  -0.333333333333333    0.500000000000000    0.166666666666667
+   0.166666666666667    0.000000000000000    0.000000000000000
+   0.333333333333333    0.000000000000000    0.000000000000000
+   0.166666666666667    0.166666666666667    0.000000000000000
+   0.333333333333333    0.166666666666667    0.000000000000000
+  -0.333333333333333    0.166666666666667    0.000000000000000
+  -0.166666666666667    0.166666666666667    0.000000000000000
+   0.333333333333333    0.333333333333333    0.000000000000000
+  -0.333333333333333    0.333333333333333    0.000000000000000
+  -0.333333333333333    0.333333333333333    0.166666666666667
+  
+  ```
+  which is the list of unique points contained in a 5x5x5 Mokhorst-Pack mesh obtained with the aid of the [SPGLIB](https://spglib.readthedocs.io/en/latest) library.
+
 
 
 ## Fourier transform of anharmonic force constants
