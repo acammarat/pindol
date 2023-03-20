@@ -1,6 +1,6 @@
 # nd2xyz
 
-Converts normal trajectories into XYZ format
+Converts normal trajectories into XYZ format.
 
 ## Installation
 
@@ -23,12 +23,12 @@ string                  name of the POSCAR file
 string                  name of the normal coordinate file
 string                  name of the normal velocities file
 string                  name of the normal accelerations file
-int                     number of atomic types (natom_types)
-string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) [uma] of atom type 1
+int                     number of atomic types
+string double           atomic symbol and mass (amu) of the first atom type
 ...  ...
-string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) [uma] of atom type natom_types
-double double         time window: initial and final time
-flag                  1 = write POSCAR restart from last configuration
+string double           atomic symbol and mass (amu) of the last atom type
+double double           time window: initial and final time
+flag                    1 = write POSCAR restart from last configuration
 
 ```
 
@@ -57,7 +57,7 @@ The *nd2xyz.inp* file is an example of input file.
 
 ## Citation
 
-The users of ND2XYZ have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
+The users of **nd2xyz** have little formal obligations specified in the [GNU General Public License](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
 In this spirit, please cite
 
