@@ -10,12 +10,12 @@ The main steps to run and analyse a Normal Dynamics (ND) simulation are the foll
    2. Obtain the effective force constants which include the effect of the temperature
 
 At the moment, the geometry reference file must be created as [VASP](https://www.vasp.at) POSCAR format for all the pre- and postprocessing steps; for the ND run, also the [LAMMPS](https://www.lammps.org) format is accepted. To show the workflow, we consider the crystalline Si system in the [si](https://github.com/acammarat/pindol/tree/main/examples/si) folder as an example.
-   
+
 ## Dynamical matrix diagonalization
 
 The [qpoints](https://github.com/acammarat/phtools/tree/main/qpoints) code is used in this step. The harmonic force constants, eigenvectors and frequencies can be obtained, in principle, with any calculator. At the moment, only [PHONOPY](https://phonopy.github.io/phonopy) is supported; for this reason, the following example will refer to its usage.
 
-First, we have to use phonopy to obtain the FORCE_CONSTANTS file containing the force constants calculated at small displacements, for which the harmonic expansion of the potential energy is supposed to be a good approximation. For this step, the reader is referred to the [PHONOPY](https://phonopy.github.io/phonopy) web site.
+First, we have to use phonopy to obtain the FORCE_CONSTANTS file containing the force constants calculated at small displacements, for which the harmonic expansion of the potential energy is supposed to be a good approximation. For this step, the reader is referred to the [PHONOPY](https://phonopy.github.io/phonopy) web site. The units of the FORCE_CONSTANTS must be eV/Ang<sup>2</sup>.
 
 Then we need to choose a list of q-points which constitutes the q-set; for example
 
@@ -77,13 +77,20 @@ where from the 6th line on we pasted the content of the *qordered.dat* file. The
 ```
 $ qpoints qpt.inp
 ```
-**qpoints** calls **phonopy** to generate the *qpoints.yaml* file and generates the *qmatrix.nd* and *freq.nd* files, which contain the eigenvectors and eigenfrequencies at each q-point specified in the set.
+**qpoints** calls **phonopy** to generate the *qpoints.yaml* file and generates the *qmatrix.nd* and *freq.nd* files, which contain the eigenvectors and eigenfrequencies at each q-point specified in the set. The eigenvectors are dimensionless while the frequencies are in THz, as in the **phonopy** output.
 
 ## Fourier transform of anharmonic force constants
 
 Now we need to calculate the Fourier transform of the anharmonic force constants. The [**phind**](https://github.com/acammarat/pindol/tree/main/phind) code is used in this step. The Normal Dynamics formalism accounts for the anharmonic interactions at any order of the Taylor expansion of the potential energy. At the moment, we implemented only the third-order in **pindol**; accordingly, **phind** is written to calculate only the Fourier transform of the third-order Cartesian force constants.
 
-Several calculators are available to obtain the third-order Cartesian force constants; at the moment, **phind** is interfaced only with [PHONO3PY](https://phonopy.github.io/phono3py). **phono3py** is used to obtain the fc3.hdf5 file containing the Cartesian third-order force constants calculated at small displacements, for which the first-order anharmonic term of the potential energy is supposed to be a good approximation. For this step, the reader is referred to the [PHONO3PY](https://phonopy.github.io/phono3py) web site.
+Several calculators are available to obtain the third-order Cartesian force constants; at the moment, **phind** is interfaced only with [PHONO3PY](https://phonopy.github.io/phono3py). **phono3py** is used to obtain the *fc3.hdf5* file containing the Cartesian third-order force constants calculated at small displacements, for which the first-order anharmonic term of the potential energy is supposed to be a good approximation. For this step, the reader is referred to the [PHONO3PY](https://phonopy.github.io/phono3py) web site.
+
+Then, we use the *fc3_extract.py* python script which reads *fc3.hdf5* and writes the *fc3.dat* input file for **phind**:
+
+```
+$ python fc3_extract.py
+```
+The units of the force constants are the same as in *fc3.hdf5*, and must be eV/Ang<sup>3</sup> 
 
 ## Normal Dynamics simulation
 
