@@ -1,0 +1,30 @@
+ATOMS
+  types 3
+  atom Mo 95.96d0
+  atom Se 78.96d0
+  atom S 32.065d0
+END_ATOMS
+
+REFCONF poscar POSCAR
+
+UNITS real
+
+INITCONF poscar POSCAR.init
+
+#READRESTART init.restart
+
+ND
+  nvt 300.0 300.0 100.0 # initial temperature, final temperature, characteristic time scale of the thermostat 
+  integrator 1.0 22 both 1.d-15 # dt, method, accuracy
+  runsteps 4000000
+  printcoord 1 normcoord.dat
+  printvel 1 normvel.dat
+  printacc 1 normacc.dat
+END_ND
+
+FINALCONF poscar final.vasp
+
+WRITERESTART final.restart
+
+END
+
