@@ -52,8 +52,8 @@ $ nd2xyz
 After the execution the following files are created if requested by the user:
 
 - *ndtrj.xyz* the Cartesian trajectory (Ang)
-- *ndvel.xyz* the Cartesian velocities (Ang/fs<sup>-1</sup>)
-- *ndacc.xyz* the Cartesian accelerations (Ang/fs<sup>-2</sup>)
+- *ndvel.xyz* the Cartesian velocities (Ang/fs)
+- *ndacc.xyz* the Cartesian accelerations (Ang/fs<sup>2</sup>)
 - *ndtraj_ave.xyz* the average atomic position within the specified time window (Ang)
 
 ## Example
