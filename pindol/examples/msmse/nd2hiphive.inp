@@ -1,9 +1,0 @@
-POSCAR                 # reference geometry
-normcoord.dat          # ND trajectory
-normacc.dat            # Qdd file
-3              # natom_types
-Mo 95.96d0
-Se 78.96d0      # atomic symbol, mass [amu]
-S 32.065d0
-3000000 4000000 1200      # initial time, final time, time skip
-
