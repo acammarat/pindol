@@ -20,9 +20,9 @@ The format of the input file is
 ```
 
 string                  name of the POSCAR file
-string                  name of the normal coordinate file
-string                  name of the normal velocities file
-string                  name of the normal accelerations file
+string                  name of the normal coordinate file; 0 = no file to convert
+string                  name of the normal velocities file; 0 = no file to convert
+string                  name of the normal accelerations file; 0 = no file to convert
 int                     number of atomic types
 string double           atomic symbol and mass (amu) of the first atom type
 ...  ...
