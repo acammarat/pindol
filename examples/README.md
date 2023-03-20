@@ -105,13 +105,48 @@ Since **phind** is able to exploit the OpenMP parallelization, it is highly reco
 ```
 $ export OMP_NUM_THREADS=64
 ```
-where 64 must be substituted with a suitable number according to the number of cores available on the machine. By running
+where 64 must be substituted with a suitable number according to the number of cores available on your machine. By running
 ```
 $ phind phind.inp
 ```
 **phind** produces the file *phi.nd* which contains the Fourier transform of the Cartesian tensor of the third-order force constants.
 
 ## Normal Dynamics simulation
+
+Once we have *qmatrix.nd*, *freq.nd* and *phi.nd*, we are almost ready to run **pindol** to perform our Normal Dynamics simulation. The reader is referred to the [pindol](https://github.com/acammarat/pindol/tree/main/pindol) README.md file for the possible options. Let us imagine that we want to run an NVT simulation at 10K, for 4 ns with 1 fs as time step; the *pindol.inp* looks like
+
+```
+ATOMS
+  types 1
+  atom Si 28.0855
+END_ATOMS
+
+REFCONF poscar POSCAR
+
+UNITS real
+
+INITVEL 10.0 666 # temperature, seed
+
+ND
+  nvt 10.0 10.0 100.0 # initial temperature, final temperature, characteristic time scale of the thermostat 
+  integrator 1.0 22 both 1.d-15 # dt, method, accuracy
+  runsteps 4000000
+  printcoord 1 normcoord.dat
+  printvel 1 normvel.dat
+  printacc 1 normacc.dat
+END_ND
+
+FINALCONF poscar final.vasp
+
+WRITERESTART final.restart
+
+END
+```
+A very basic OpenMP parallelization is implemented in **pindol**, which can be enabled by exporting the OMP_NUM_THREADS variable as done above for **phind**. We recommend to test the execution time over different values of the OMP_NUM_THREADS variable on a short run, in order to estimate in advance the optimal number of cores. The ND simulation is then performing by executing
+```
+$ pindol | tee out
+```
+where we chose to write the standard output also to the *out* file for convenience.
 
 
 ## Analyse the results
