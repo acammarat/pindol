@@ -85,7 +85,7 @@ Now we need to calculate the Fourier transform of the anharmonic force constants
 
 Several calculators are available to obtain the third-order Cartesian force constants; at the moment, **phind** is interfaced only with [PHONO3PY](https://phonopy.github.io/phono3py). **phono3py** is used to obtain the *fc3.hdf5* file containing the Cartesian third-order force constants calculated at small displacements, for which the first-order anharmonic term of the potential energy is supposed to be a good approximation. For this step, the reader is referred to the [PHONO3PY](https://phonopy.github.io/phono3py) web site. The units of the force constants in *fc3.hdf5* must be eV/Ang<sup>3</sup>.
 
-Then, we use the *fc3_extract.py* python script which reads *fc3.hdf5* and writes the *fc3.dat* input file for **phind**:
+Then, we use the *fc3_extract.py* python script in the [examples](https://github.com/acammarat/pindol/tree/main/examples) folder, which reads *fc3.hdf5* and writes the *fc3.dat* input file for **phind**:
 
 ```
 $ python fc3_extract.py
