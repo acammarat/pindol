@@ -77,7 +77,7 @@ where from the 6th line on we pasted the content of the *qordered.dat* file. The
 ```
 $ qpoints qpt.inp
 ```
-**qpoints** calls **phonopy** to generate the *qpoints.yaml* file and generates the *qmatrix.nd* and *freq.nd* files, which contain the eigenvectors and eigenfrequencies at each q-point specified in the set. The eigenvectors are dimensionless while the frequencies are in THz, as in the **phonopy** output.
+**qpoints** calls **phonopy** to generate the *qpoints.yaml* file and generates the *qmatrix.nd* and *freq.nd* files, which contain the eigenvectors and eigenfrequencies at each q-point specified in the set. The eigenvectors are dimensionless while the frequencies are in THz, as in the **phonopy** output. The *qmatrix.nd* and *freq.nd* files will be used by **pindol** and all the postprocessing tools, and must be present in the folder where they are executed.
 
 ## Fourier transform of anharmonic force constants
 
@@ -234,12 +234,25 @@ Si 28.0855
                            # regardless the time window specified above
                            # and write a POSCAR_last.vasp configuration
 ```
+The conversion is then obtained by executing
+```
+$ nd2xyz nd2xyz.inp
+```
+In this example, we extract the last nanosecond of trajectory. The Cartesian trajectory (Ang), velocities (Ang/fs) and accelerations (Ang/fs<sup>2</sup>) are written in *ndtrj.xyz*, *ndvel.xyz* and *ndacc.xyz*, respectively. The file *ndtraj_ave.xyz* contains the average atomic position within the specified time window. Such files can then be used for postprocessing to extract any physical quantity as in usual standard Molecular Dynamics (MD) simulations.
 
-In this example, we want to extract the last nanosecond of trajectory. The Cartesian trajectory (Ang), velocities (Ang/fs) and accelerations (Ang/fs<sup>2</sup>) are written in *ndtrj.xyz*, *ndvel.xyz* and *ndacc.xyz*, respectively. The file *ndtraj_ave.xyz* contains the average atomic position within the specified time window. Such files can then be used for postprocessing to extract any physical quantity as in usual standard Molecular Dynamics (MD) simulations.
+### Effective second- and third-order force constants
 
-### Conversion of normal trajectory, velocities and accelerations in standard Cartesian .xyz format
-
-
+We now want to obtain the effective force constants from the ND run as it is usually done with molecular dynamics simulations. To this aim, we need to collect displacements and forces, and provide them to any force constant calculator which makes use of fitting procedures. At the moment, we provide an interface to the [**hiPhive**](https://hiphive.materialsmodeling.org) software with the **nd2hiphive** code.
+We assume that we created the *normcoord.dat* and *normacc.dat* files. We then prepare the *nd2hiphive.inp* input files accordingly
+```
+POSCAR                 # reference geometry
+normcoord.dat          # ND trajectory
+normacc.dat            # Qdd file
+1                      # number of atomic types
+Si 28.0855             # atom_symbol mass (amu)
+3000000 4000000 700    # initial time, final time, time skip
+```
+and run
 
 ## Contributions, bug reports and feature requests
 
