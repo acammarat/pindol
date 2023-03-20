@@ -89,9 +89,10 @@ pindol
 
 The standard output contains information on the energy, the conserved quantity and the temperature at each time step. If the environmental variable OMP_NUM_THREADS is specified, pindol exploits the OpenMP parallelization.
 
-## Example
+## Examples
 
-XXX Magari possiamo metterci lo zirconio? (il template.inp e' per Zr...)
+- [Cristalline Si](https://github.com/acammarat/pindol/tree/main/pindol/examples/si)
+- [MoS<sub>2</sub>/MoSe<sub>2</sub>](https://github.com/acammarat/pindol/tree/main/pindol/examples/msmse) van der Waals bilayer
 
 ## Citation
 
