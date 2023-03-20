@@ -2,13 +2,14 @@
 
 The main steps to run and analyse a Normal Dynamics (ND) simulation are the following:
 
-1. Generate *qmatrix.nd* and *freq.nd* with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints)
-2. Generate *phi.nd* with [**phind**](https://github.com/acammarat/pindol/tree/main/phind)
+1. [Dynamical matrix diagonalization](Dynamical-matrix-diagonalization): generate *qmatrix.nd* and *freq.nd* with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints)
+2. Fourier transform of third-order force constants: generate *phi.nd* with [**phind**](https://github.com/acammarat/pindol/tree/main/phind)
 3. Run the ND simulation with [**pindol**](https://github.com/acammarat/pindol/tree/main/pindol)
 4. Analyse the results
-  4.1 Convert the trajectory, velocities and accelerations in XYZ format
-  4.2 Obtain the effective force constants which include the effect of the temperature
+   1. Convert the trajectory, velocities and accelerations in XYZ format
+   2. Obtain the effective force constants which include the effect of the temperature
 
+## Dynamical matrix diagonalization
 
 
 ...
