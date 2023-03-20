@@ -1,8 +1,12 @@
 # Workflow of Normal Dynamics simulations with PINDOL
 
-Coming soon.
+Coming soon
 
 ## Requirements
+
+At the moment, pindol is interfaced with 
+
+
 
 ...
 
