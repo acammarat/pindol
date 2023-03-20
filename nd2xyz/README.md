@@ -49,7 +49,12 @@ $ nd2xyz
 
 ```
 
-After the execution .xyz files are created, as requested by the user.
+After the execution the following files are created if requested by the user:
+
+- *ndtrj.xyz* the Cartesian trajectory (Ang)
+- *ndvel.xyz* the Cartesian velocities (Ang/s<sup>-1</sup>)
+- *ndacc.xyz* the Cartesian accelerations (Ang/s<sup>-2</sup>)
+- *ndtraj_ave.xyz* the average atomic position within the specified time window (Ang)
 
 ## Example
 
