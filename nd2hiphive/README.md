@@ -22,16 +22,16 @@ The format of the input file is
 string                  name of the POSCAR file
 string                  name of the normal coordinates file
 string                  name of the normal accelerations file
-int                     number of atomic types (natom_types)
-string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) (amu) of atom type 1
+int                     number of atomic types 
+string double           atomic symbol and mass (amu) of the first atom type
 ...  ...
-string double           atomic symbol and mass (at_pertype(i), mass_pertype(i) (amu) of atom type natom_types
+string double           atomic symbol and mass (amu) of the last atom type
 double double double    initial time, final time, max skip time
 
 
 ```
 
-where `int` is an integer number, `double` is a real number of type double, and `string` a string of type char. The command line syntax can be shown by using the `-h` option:
+where `int` is an integer number, `double` is a real number of type double, and `string` a string of type char. The *skip time* is meant to skip configurations falling within a time window with maximum random width equal to skip_time; this is to avoid to collect very similar configurations and forces which do not improve the force constants fit in a significant way. The command line syntax can be shown by using the `-h` option:
 
 ```
 
@@ -54,6 +54,7 @@ After the execution, the following files are created:
 - *ndhiPhive_prim_dir.vasp* the reference unit cell in POSCAR format
 - *ndhiPhive_superc.xyz* the supercell commensurate with the q-point set
 - *ndhiPhive_phonopy.py* the python code to be added to the example fcs.py script, the latter used to call **hiPhive** and calculate the effective force constants
+- *ndhiPhive_dispfor.xyz* containing displacements (Ang) and forces (eV/Ang) at 
 
 ## Example
 
