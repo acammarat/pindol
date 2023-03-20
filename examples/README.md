@@ -83,16 +83,36 @@ $ qpoints qpt.inp
 
 Now we need to calculate the Fourier transform of the anharmonic force constants. The [**phind**](https://github.com/acammarat/pindol/tree/main/phind) code is used in this step. The Normal Dynamics formalism accounts for the anharmonic interactions at any order of the Taylor expansion of the potential energy. At the moment, we implemented only the third-order in **pindol**; accordingly, **phind** is written to calculate only the Fourier transform of the third-order Cartesian force constants.
 
-Several calculators are available to obtain the third-order Cartesian force constants; at the moment, **phind** is interfaced only with [PHONO3PY](https://phonopy.github.io/phono3py). **phono3py** is used to obtain the *fc3.hdf5* file containing the Cartesian third-order force constants calculated at small displacements, for which the first-order anharmonic term of the potential energy is supposed to be a good approximation. For this step, the reader is referred to the [PHONO3PY](https://phonopy.github.io/phono3py) web site.
+Several calculators are available to obtain the third-order Cartesian force constants; at the moment, **phind** is interfaced only with [PHONO3PY](https://phonopy.github.io/phono3py). **phono3py** is used to obtain the *fc3.hdf5* file containing the Cartesian third-order force constants calculated at small displacements, for which the first-order anharmonic term of the potential energy is supposed to be a good approximation. For this step, the reader is referred to the [PHONO3PY](https://phonopy.github.io/phono3py) web site. The units of the force constants in *fc3.hdf5* must be eV/Ang<sup>3</sup>.
 
 Then, we use the *fc3_extract.py* python script which reads *fc3.hdf5* and writes the *fc3.dat* input file for **phind**:
 
 ```
 $ python fc3_extract.py
 ```
-The units of the force constants are the same as in *fc3.hdf5*, and must be eV/Ang<sup>3</sup> 
+The units of the force constants in *fc3.dat* are the same as in *fc3.hdf5*.
+We now create the input file *phind.inp* for **phind**:
+
+```
+POSCAR         # reference geometry
+5 5 5          # supercell dimensions used to generate the fc3.hdf5 file
+1              # natom_types
+Si 28.0855     # atomic symbol, mass [amu]
+0              # write (q,j -> l) map: 0=no, 1=yes
+1              # calc phi: 0=no, 1=yes
+```
+Since **phind** is able to exploit the OpenMP parallelization, it is highly recommended to set the OMP_NUM_THREADS variable:
+```
+$ export OMP_NUM_THREADS=64
+```
+where 64 must be substituted with a suitable number according to the number of cores available on the machine. By running
+```
+$ phind phind.inp
+```
+**phind** produces the file *phi.nd* which contains the Fourier transform of the Cartesian tensor of the third-order force constants.
 
 ## Normal Dynamics simulation
+
 
 ## Analyse the results
 
