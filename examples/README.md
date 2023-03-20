@@ -1,10 +1,13 @@
 # Workflow of Normal Dynamics simulations with PINDOL
 
-Coming soon
+The main steps to run and analyse a Normal Dynamics (ND) simulation are the following:
 
-## Requirements
-
-At the moment, pindol is interfaced with 
+1. Generate *qmatrix.nd* and *freq.nd* with [QPOINTS](https://github.com/acammarat/phtools/tree/main/qpoints)
+2. Generate *phi.nd* with [**phind**](https://github.com/acammarat/pindol/tree/main/phind)
+3. Run the ND simulation with [**pindol**](https://github.com/acammarat/pindol/tree/main/pindol)
+4. Analyse the results
+  4.1 Convert the trajectory, velocities and accelerations in XYZ format
+  4.2 Obtain the effective force constants which include the effect of the temperature
 
 
 
