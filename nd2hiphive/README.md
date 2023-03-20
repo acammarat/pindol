@@ -1,6 +1,6 @@
 # nd2hiphive
 
-Processes the normal coordinate and acceleration files to produce the necessary input for [hiPhive](https://hiphive.materialsmodeling.org)
+Processes the normal coordinate and acceleration files to produce the necessary input for [hiPhive](https://hiphive.materialsmodeling.org).
 
 ## Installation
 
