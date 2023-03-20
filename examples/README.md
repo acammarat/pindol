@@ -17,7 +17,7 @@ The [qpoints](https://github.com/acammarat/phtools/tree/main/qpoints) code is us
 
 First, we have to use phonopy to obtain the FORCE_CONSTANTS file containing the force constants calculated at small displacements, for which the harmonic expansion of the potential energy is supposed to be a good approximation. For this step, the reader is referred to the [PHONOPY](https://phonopy.github.io/phonopy) web site. The units of the FORCE_CONSTANTS must be eV/Ang<sup>2</sup>.
 
-Then we need to choose a list of q-points which constitutes the q-set; for example
+Then, we need to choose a list of q-points which constitutes the q-set; for example
 
 ```
    0.000000000000000    0.000000000000000    0.000000000000000
