@@ -30,6 +30,10 @@
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
+! v. 0.8
+! - corrected a bug in writing ndhiPhive_phonopy.py when the number of atoms in
+!   the reference cell is equal to 1
+!
 ! v. 0.7
 ! - routine variables changed according to the normal_to_cartesian routine
 !   taken from pindol v. 1.13
@@ -74,7 +78,7 @@ module var
   real(8), parameter :: eV_to_J = 1.602176634d-19         ! taken from NIST, 1 e = 1.602176634 x 10-19 C 
   real(8), parameter :: eV_to_ieu = 1.d-10 * eV_to_J / uma_to_kg
   real(8), parameter :: internal_to_eVAng = 1.d0/eV_to_ieu ! internal energy units to eV/Ang
-  character(3), parameter :: version='0.7'
+  character(3), parameter :: version='0.8'
   character(8), parameter :: error_string = ' ERROR: '
   ! from input
   integer, save :: nq_chk, natom_types

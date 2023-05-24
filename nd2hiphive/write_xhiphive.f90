@@ -86,23 +86,32 @@ subroutine write_xhiphive
     write(21,'(a,3(f20.16,a),a2)') '[',side_eq_UC(1,1),',',side_eq_UC(1,2),',',side_eq_UC(1,3),'],'
     write(21,'(a,3(f20.16,a),a2)') '                                   [',side_eq_UC(2,1),',',side_eq_UC(2,2),',',side_eq_UC(2,3),'],'
     write(21,'(a,3(f20.16,a),a2)') '                                   [',side_eq_UC(3,1),',',side_eq_UC(3,2),',',side_eq_UC(3,3),']],'
-    write(21,'(a)',advance='no') '                scaled_positions=['
-    x_tmp = side_eq_UC_inv(1,1)*pos_eq_UC(1,1) + side_eq_UC_inv(2,1)*pos_eq_UC(1,2) + side_eq_UC_inv(3,1)*pos_eq_UC(1,3) 
-    y_tmp = side_eq_UC_inv(1,2)*pos_eq_UC(1,1) + side_eq_UC_inv(2,2)*pos_eq_UC(1,2) + side_eq_UC_inv(3,2)*pos_eq_UC(1,3) 
-    z_tmp = side_eq_UC_inv(1,3)*pos_eq_UC(1,1) + side_eq_UC_inv(2,3)*pos_eq_UC(1,2) + side_eq_UC_inv(3,3)*pos_eq_UC(1,3) 
-    write(21,'(a,3(f20.16,a),a2)') '[',x_tmp,',',y_tmp,',',z_tmp,'],'
-    do i = 2, atoms_UC-1
-      write(21,'(a)',advance='no') '                                   '
-      x_tmp = side_eq_UC_inv(1,1)*pos_eq_UC(i,1) + side_eq_UC_inv(2,1)*pos_eq_UC(i,2) + side_eq_UC_inv(3,1)*pos_eq_UC(i,3) 
-      y_tmp = side_eq_UC_inv(1,2)*pos_eq_UC(i,1) + side_eq_UC_inv(2,2)*pos_eq_UC(i,2) + side_eq_UC_inv(3,2)*pos_eq_UC(i,3) 
-      z_tmp = side_eq_UC_inv(1,3)*pos_eq_UC(i,1) + side_eq_UC_inv(2,3)*pos_eq_UC(i,2) + side_eq_UC_inv(3,3)*pos_eq_UC(i,3) 
+    if ( atoms_UC /= 1 ) then
+      write(21,'(a)',advance='no') '                scaled_positions=['
+      x_tmp = side_eq_UC_inv(1,1)*pos_eq_UC(1,1) + side_eq_UC_inv(2,1)*pos_eq_UC(1,2) + side_eq_UC_inv(3,1)*pos_eq_UC(1,3) 
+      y_tmp = side_eq_UC_inv(1,2)*pos_eq_UC(1,1) + side_eq_UC_inv(2,2)*pos_eq_UC(1,2) + side_eq_UC_inv(3,2)*pos_eq_UC(1,3) 
+      z_tmp = side_eq_UC_inv(1,3)*pos_eq_UC(1,1) + side_eq_UC_inv(2,3)*pos_eq_UC(1,2) + side_eq_UC_inv(3,3)*pos_eq_UC(1,3) 
       write(21,'(a,3(f20.16,a),a2)') '[',x_tmp,',',y_tmp,',',z_tmp,'],'
-    end do
-    write(21,'(a)',advance='no') '                                   '
-    x_tmp = side_eq_UC_inv(1,1)*pos_eq_UC(atoms_UC,1) + side_eq_UC_inv(2,1)*pos_eq_UC(atoms_UC,2) + side_eq_UC_inv(3,1)*pos_eq_UC(atoms_UC,3) 
-    y_tmp = side_eq_UC_inv(1,2)*pos_eq_UC(atoms_UC,1) + side_eq_UC_inv(2,2)*pos_eq_UC(atoms_UC,2) + side_eq_UC_inv(3,2)*pos_eq_UC(atoms_UC,3) 
-    z_tmp = side_eq_UC_inv(1,3)*pos_eq_UC(atoms_UC,1) + side_eq_UC_inv(2,3)*pos_eq_UC(atoms_UC,2) + side_eq_UC_inv(3,3)*pos_eq_UC(atoms_UC,3) 
-    write(21,'(a,3(f20.16,a),a3)') '[',x_tmp,',',y_tmp,',',z_tmp,']],'
+      do i = 2, atoms_UC-1
+        write(21,'(a)',advance='no') '                                   '
+        x_tmp = side_eq_UC_inv(1,1)*pos_eq_UC(i,1) + side_eq_UC_inv(2,1)*pos_eq_UC(i,2) + side_eq_UC_inv(3,1)*pos_eq_UC(i,3) 
+        y_tmp = side_eq_UC_inv(1,2)*pos_eq_UC(i,1) + side_eq_UC_inv(2,2)*pos_eq_UC(i,2) + side_eq_UC_inv(3,2)*pos_eq_UC(i,3) 
+        z_tmp = side_eq_UC_inv(1,3)*pos_eq_UC(i,1) + side_eq_UC_inv(2,3)*pos_eq_UC(i,2) + side_eq_UC_inv(3,3)*pos_eq_UC(i,3) 
+        write(21,'(a,3(f20.16,a),a2)') '[',x_tmp,',',y_tmp,',',z_tmp,'],'
+      end do
+      write(21,'(a)',advance='no') '                                   '
+      x_tmp = side_eq_UC_inv(1,1)*pos_eq_UC(atoms_UC,1) + side_eq_UC_inv(2,1)*pos_eq_UC(atoms_UC,2) + side_eq_UC_inv(3,1)*pos_eq_UC(atoms_UC,3) 
+      y_tmp = side_eq_UC_inv(1,2)*pos_eq_UC(atoms_UC,1) + side_eq_UC_inv(2,2)*pos_eq_UC(atoms_UC,2) + side_eq_UC_inv(3,2)*pos_eq_UC(atoms_UC,3) 
+      z_tmp = side_eq_UC_inv(1,3)*pos_eq_UC(atoms_UC,1) + side_eq_UC_inv(2,3)*pos_eq_UC(atoms_UC,2) + side_eq_UC_inv(3,3)*pos_eq_UC(atoms_UC,3) 
+      write(21,'(a,3(f20.16,a),a3)') '[',x_tmp,',',y_tmp,',',z_tmp,']],'
+    else
+      write(21,'(a)',advance='no') '                scaled_positions=['
+      x_tmp = side_eq_UC_inv(1,1)*pos_eq_UC(1,1) + side_eq_UC_inv(2,1)*pos_eq_UC(1,2) + side_eq_UC_inv(3,1)*pos_eq_UC(1,3) 
+      y_tmp = side_eq_UC_inv(1,2)*pos_eq_UC(1,1) + side_eq_UC_inv(2,2)*pos_eq_UC(1,2) + side_eq_UC_inv(3,2)*pos_eq_UC(1,3) 
+      z_tmp = side_eq_UC_inv(1,3)*pos_eq_UC(1,1) + side_eq_UC_inv(2,3)*pos_eq_UC(1,2) + side_eq_UC_inv(3,3)*pos_eq_UC(1,3) 
+      write(21,'(a,3(f20.16,a),a3)') '[',x_tmp,',',y_tmp,',',z_tmp,']],'
+    end if
+
     write(21,'(a)',advance='no') '                symbols='
     do i = 1, natom_types-1
       write(21,'(*(a))',advance='no')  "['",trim(at_pertype(i)),"']*",i2a(natoms_UC(i)),'+'
