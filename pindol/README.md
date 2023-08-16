@@ -100,7 +100,7 @@ The users of PINDOL have little formal obligations specified in the [GNU General
 However, it is common practice in the scientific literature, to acknowledge the efforts of people that have made the research possible.
 In this spirit, please cite
 
-A. Cammarata, M. Dasic and P. Nicolini, *Normal Dynamics: Sampling dynamical trajectories in the reciprocal space*, Phys. Rev. B **XX**, XXXXX (XXXX) DOI: [xxx](https://doi.org/xxx)
+A. Cammarata, M. Dasic and P. Nicolini, *Normal Dynamics: Sampling dynamical trajectories in the reciprocal space*, DOI: [xxx](https://doi.org/xxx)
 
 where the formulation used to perform normal dynamics is reported.
 
