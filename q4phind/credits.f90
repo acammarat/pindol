@@ -4,9 +4,14 @@
 ! https://nano.cvut.cz/researchers/antonio-cammarata
 ! https://orcid.org/0000-0002-5691-0682
 ! 
+! Program to calculate the atomic character
 ! Order a q-point set as GM, H, S and remove possible complex-conjugated couples
 ! to generate qmatrix.nd and freq.nd compatible with phind v >= 4.3
-! 
+!
+! If used for production, you should cite
+! A. Cammarata, M. Dasic, P. Nicolini, J. Chem. Phys. 161, 084111 (2024)
+! https://doi.org/10.1063/5.0224108
+!
 !    This file is part of q4phind.
 !
 ! This program is free software; you can redistribute it and/or modify
@@ -37,9 +42,8 @@ subroutine credits
   write(*,'(a)') ' to acknowledge the efforts of people that have made the research possible.'
   write(*,'(a)') ' In this spirit, please cite '
   write(*,*)
-  write(*,'(a)') ' A. Cammarata, M. Dasic and P. Nicolini'
-  write(*,'(a)') ' Normal Dynamics: solving Newton’s equations in the reciprocal space'
-  write(*,'(a)') ' https://doi.org/xxx'
+  write(*,'(a)') ' A. Cammarata, M. Dasic, P. Nicolini, J. Chem. Phys. 161, 084111 (2024)'
+  write(*,'(a)') ' https://doi.org/10.1063/5.0224108'
   write(*,*)
   write(*,*)
 
