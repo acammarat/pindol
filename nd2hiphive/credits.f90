@@ -9,8 +9,8 @@
 ! to calculate the effective interatomic force constants
 ! 
 ! If used for production, you should cite
-! Phys. Rev. B XX, XXXXX (XXXX)
-! https://doi.org/10.1103/xxx
+! A. Cammarata, M. Dasic, P. Nicolini, J. Chem. Phys. 161, 084111 (2024)
+! https://doi.org/10.1063/5.0224108
 !
 !    This file is part of nd2hiphive.
 !
@@ -42,9 +42,8 @@ subroutine credits
   write(*,'(a)') ' to acknowledge the efforts of people that have made the research possible.'
   write(*,'(a)') ' In this spirit, please cite '
   write(*,*)
-  write(*,'(a)') ' A. Cammarata, M. Dasic and P. Nicolini'
-  write(*,'(a)') ' Normal Dynamics: solving Newton’s equations in the reciprocal space'
-  write(*,'(a)') ' https://doi.org/xxx'
+  write(*,'(a)') ' A. Cammarata, M. Dasic, P. Nicolini, J. Chem. Phys. 161, 084111 (2024)'
+  write(*,'(a)') ' https://doi.org/10.1063/5.0224108'
   write(*,*)
   write(*,*)
 
