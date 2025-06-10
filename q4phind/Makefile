@@ -10,7 +10,7 @@ FLAGS+= -O3
 
 EXE = q4phind
 
-OBJECTS = main.o \
+OBJECTS = main.o init.o check_qpt.o write_qordered.o write_qopt.o check_qopt.o\
           show_logo.o credits.o
 
 all: $(OBJECTS)
