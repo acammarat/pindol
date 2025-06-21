@@ -44,7 +44,7 @@ subroutine read_eigen
   use integer_to_string, only: i2a
   implicit none
   integer :: i, j, k, indpq, indpq1
-  real(8) :: tmp_e(2*nq)
+  real(8) :: tmp_e(2*nq), qHcheck(3)
   character(1) :: comment
   logical :: file_exists, wrongq_fl
  
@@ -112,7 +112,7 @@ subroutine read_eigen
   ! The working assumption in PINDOL is that all the q-components belong to the interval (-1/2,1/2]
 
   wrongq_fl = .false.
-  ! check eigen(GM)
+  ! check GM
   do k = 1, npG ! The do loop is here used to preserve the general structure of the eigenreading
     read(20,*) comment, (vec(k,i),i=1,3) ! Ang^-1
     read(20,*) comment, indpq1, (vec_red(k)%ei(i),i=1,3) ! red. coord. - indpq1 here is a dummy var
@@ -132,12 +132,19 @@ subroutine read_eigen
     end do
   end do
 
-  ! check eigen(H)
+  ! check H
   do k = npG+1, npG+npH
     read(20,*) comment, (vec(k,i),i=1,3) ! Ang^-1
     read(20,*) comment, indpq1, (vec_red(k)%ei(i),i=1,3) ! red. coord. - indpq1 here is a dummy var
     vec_red(k)%set = 'H'
-    if ( .not. ((abs(abs(vec_red(k)%ei(1))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(k)%ei(2))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(k)%ei(3))-0.5d0)<tiny(1.d0)) ) ) then
+
+    ! q at the border of the Brillouin zone belongs to H only if its components are 0 or 1/2
+    ! if q belongs to H then qHcheck components are integer numbers
+    qHcheck(:) = 2.d0 * vec_red(k)%ei(:)
+
+    if ( .not. ((abs(qHcheck(1)-floor(qHcheck(1)))<tiny(1.d0)) .and. (abs(qHcheck(2)-floor(qHcheck(2)))<tiny(1.d0)) &
+           .and. (abs(qHcheck(3)-floor(qHcheck(3)))<tiny(1.d0))) &
+       ) then
       write(*,'(a,a,a,3(f10.5,1x))') ' ERROR: q-point in set H expected but found q',i2a(k),' ',vec_red(k)%ei(:)
       wrongq_fl = .true.
     end if
@@ -152,13 +159,20 @@ subroutine read_eigen
     end do
   end do
 
-  ! check eigen(S)
+  ! check S
   do k = npG+npH+1, npG+npH+npS
     read(20,*) comment, (vec(k,i),i=1,3) ! Ang^-1
     read(20,*) comment, indpq1, (vec_red(k)%ei(i),i=1,3) ! red. coord. - indpq1 here is a dummy var
     vec_red(k)%set = 'S'
+
+    ! q at the border of the Brillouin zone belongs to H only if its components are 0 or 1/2
+    ! if q belongs to H then qHcheck components are integer numbers
+    qHcheck(:) = 2.d0 * vec_red(k)%ei(:)
+
     if ( (abs(vec_red(k)%ei(1))<tiny(1.d0) .and. abs(vec_red(k)%ei(2))<tiny(1.d0) .and. abs(vec_red(k)%ei(3))<tiny(1.d0)) .or. &
-         ((abs(abs(vec_red(k)%ei(1))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(k)%ei(2))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(k)%ei(3))-0.5d0)<tiny(1.d0))) ) then
+         ((abs(qHcheck(1)-floor(qHcheck(1)))<tiny(1.d0)) .and. (abs(qHcheck(2)-floor(qHcheck(2)))<tiny(1.d0)) &          
+           .and. (abs(qHcheck(3)-floor(qHcheck(3)))<tiny(1.d0))) &
+       ) then
       write(*,'(a,a,a,3(f10.5,1x))') ' ERROR: q-point in set S expected but found q',i2a(k),' ',vec_red(k)%ei(:)
       wrongq_fl = .true.
     end if
