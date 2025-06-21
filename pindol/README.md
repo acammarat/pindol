@@ -91,8 +91,8 @@ The standard output contains information on the energy, the conserved quantity a
 
 ## Examples
 
-- [Cristalline Si](https://github.com/acammarat/pindol/tree/main/pindol/examples/si)
-- [MoS<sub>2</sub>/MoSe<sub>2</sub>](https://github.com/acammarat/pindol/tree/main/pindol/examples/msmse) van der Waals bilayer
+- [Cristalline Si](https://github.com/acammarat/pindol/tree/main/examples/si)
+- [MoS<sub>2</sub>/MoSe<sub>2</sub>](https://github.com/acammarat/pindol/tree/main/examples/msmse) van der Waals bilayer
 
 ## Citation
 
