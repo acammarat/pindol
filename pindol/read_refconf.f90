@@ -1,4 +1,4 @@
-! pindol version 1.0, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
+! pindol version 1.0.1, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
 !
 ! This program is free software; you can redistribute it and/or modify
 ! it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ subroutine read_refconf_lammpsdata
            backspace(refconf_unit)
            read(refconf_unit,*) atom_types_tmp
            if ( atom_types_tmp /= atom_types ) then
-              write(0,*) error_string, 'The number of atomic types in the data file does not match with what is reported in the ATOMS section.'
+              write(0,*) error_string, 'The number of atomic types in the data file does not match what reported in the ATOMS section.'
               stop
            end if
            exit
@@ -143,7 +143,7 @@ subroutine read_refconf_lammpsdata
         do i = 1, atom_types
            read(refconf_unit,*) j, mass_tmp
            if ( abs(mass_tmp-mass_pertype(i)) > tiny ) then
-              write(0,*) error_string, 'The atomic masses in the data file do not match with what is reported in the ATOMS section.'
+              write(0,*) error_string, 'The atomic masses in the data file do not match what reported in the ATOMS section.'
               stop
            end if
         end do
@@ -216,7 +216,7 @@ subroutine read_refconf_poscar
   ! scale factor
   read(refconf_unit,*) scale
   if ( abs(scale-1.d0) > tiny ) then
-     write(0,*) error_string, 'POSCAR scale factor not implemented yet (it cannot be anything other than 1).'
+     write(0,*) error_string, 'POSCAR scale factor not implemented yet (it cannot be anything else than 1).'
      stop
   end if
   
@@ -238,7 +238,7 @@ subroutine read_refconf_poscar
   ! check if they match those in the input
   do i = 1, atom_types
      if ( at_pertype(i) /= at_tmp(i) ) then
-        write(0,*) error_string, 'The symbols of the atomic types in the poscar file do not match what is reported in the ATOMS section.'
+        write(0,*) error_string, 'The symbols of atomic types in the poscar file do not match what reported in the ATOMS section.'
         stop
      end if
   end do

@@ -1,4 +1,4 @@
-! pindol version 1.0, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
+! pindol version 1.0.1, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
 !
 ! This program is free software; you can redistribute it and/or modify
 ! it under the terms of the GNU General Public License as published by
@@ -219,7 +219,7 @@ subroutine read_initconf_poscar
   ! scale factor
   read(initconf_unit,*) scale
   if ( abs(scale-1.d0) > tiny ) then
-     write(0,*) error_string, 'POSCAR scale factor not implemented yet (it cannot be anything other than 1).'
+     write(0,*) error_string, 'POSCAR scale factor not implemented yet (it cannot be anything else than 1).'
      stop
   end if
 

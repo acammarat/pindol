@@ -1,4 +1,4 @@
-! pindol version 1.0, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
+! pindol version 1.0.1, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
 !
 ! This program is free software; you can redistribute it and/or modify
 ! it under the terms of the GNU General Public License as published by
@@ -41,12 +41,17 @@ subroutine run_nd
        acc_filename, restart_Y, restart_s, restart_sd, restart_time, temperature_ramp, restart_thermomass
   use int2str
   use io_units, only: coord_unit, vel_unit, acc_unit
+  !!!! test
+  use refconf, only: atoms_UC
+  use supercell, only: ncells_tot
   implicit none
   integer :: i, step, IPAR
   real(8) :: time, time_out, RPAR
   real(8) :: Qdd(nptotq), Ekin, Epot_harm, Epot_anh, Epot, Etot, CoM, current_temperature
   real(8) :: Epot_thermo, Ekin_thermo
   external :: F, JAC
+  !!! test
+  integer :: n
   
   write(*,'(a)') 'Performing normal dynamics...'
 
@@ -96,18 +101,38 @@ subroutine run_nd
      
      ! project the initial velocities
      call cartesian_to_normal ( vel_EC, Y(nptotq+1:2*nptotq), 'vel' )
-     
-     time_init = 0.d0
-     if ( nvt_flag ) then
-        Y(2*nptotq+1) = 0.d0 
-        Y(2*nptotq+2) = 0.d0
-        ! convert the characteristic timescale of the thermostat into "mass"
-        thermomass = dble(ndof_temperature-ndof_sub) * kB_ieu * timeunit*timeunit * thermotime*thermotime
-     end if
+
+!!!!!!!!!!!
+     open(1111, file='init_pos0.txt', action='write', status='unknown')
+     open(1112, file='init_vel0.txt', action='write', status='unknown')
+     do i = 1, atoms_UC
+     do n = 1, ncells_tot
+       write(1111,'(3(g22.14,1x))') pos_EC(i,:,n)
+       write(1112,'(3(g22.14,1x))') vel_EC(i,:,n)
+     end do
+     end do
+     close(1111)
+     close(1112)
+
+     open(1113, file='init_q.txt', action='write', status='unknown')
+     write(1113,'('//i2a(nptotq+1)//output_format//')') time*itu_to_time_units, (Y(i),i=1,nptotq)
+     close(1113)
+     open(1113, file='init_qd.txt', action='write', status='unknown')
+     write(1113,'('//i2a(nptotq+1)//output_format//')') time*itu_to_time_units, (Y(i),i=nptotq+1,2*nptotq)
+     close(1113)
+!!!!!!!!!!!
+
+!     time_init = 0.d0
+!     if ( nvt_flag ) then
+!        Y(2*nptotq+1) = 0.d0 
+!        Y(2*nptotq+2) = 0.d0
+!        ! convert the characteristic timescale of the thermostat into "mass"
+!        thermomass = dble(ndof_temperature-ndof_sub) * kB_ieu * timeunit*timeunit * thermotime*thermotime
+!     end if
 
   end if
-  time = time_init
-  time_out = time ! used only if the loop over steps is skipped
+!  time = time_init
+!  time_out = time ! used only if the loop over steps is skipped
   Epot_thermo = 0.d0
   Ekin_thermo = 0.d0
 
@@ -157,6 +182,73 @@ subroutine run_nd
      write(acc_unit,'('//i2a(nptotq+1)//output_format//')') time*itu_to_time_units, (Qdd(i),i=1,nptotq)
   end if
 
+  
+!     pos_EC(:,:,:) = 0.d0
+!     vel_EC(:,:,:) = 0.d0
+     ! project back the initial configuration   
+     call normal_to_cartesian (Y(1:nptotq), pos_EC, 'pos' )
+     call normal_to_cartesian (Y(nptotq+1:2*nptotq), vel_EC, 'vel' )
+     open(1111, file='init_pos1.txt', action='write', status='unknown')
+     open(1112, file='init_vel1.txt', action='write', status='unknown')
+     do i = 1, atoms_UC
+     do n = 1, ncells_tot
+       write(1111,'(3(g22.14,1x))') pos_EC(i,:,n)
+       write(1112,'(3(g22.14,1x))') vel_EC(i,:,n)
+     end do
+     end do
+     close(1111)
+     close(1112)
+
+     call cartesian_to_normal ( pos_EC, Y(1:nptotq), 'pos' )
+     call cartesian_to_normal ( vel_EC, Y(nptotq+1:2*nptotq), 'vel' )
+     call normal_to_cartesian (Y(1:nptotq), pos_EC, 'pos' )
+     call normal_to_cartesian (Y(nptotq+1:2*nptotq), vel_EC, 'vel' )
+     open(1111, file='init_pos2.txt', action='write', status='unknown')
+     open(1112, file='init_vel2.txt', action='write', status='unknown')
+     do i = 1, atoms_UC
+     do n = 1, ncells_tot
+       write(1111,'(3(g22.14,1x))') pos_EC(i,:,n)
+       write(1112,'(3(g22.14,1x))') vel_EC(i,:,n)
+     end do
+     end do
+     close(1111)
+     close(1112)
+
+     call cartesian_to_normal ( pos_EC, Y(1:nptotq), 'pos' )
+     call cartesian_to_normal ( vel_EC, Y(nptotq+1:2*nptotq), 'vel' )
+     call normal_to_cartesian (Y(1:nptotq), pos_EC, 'pos' )
+     call normal_to_cartesian (Y(nptotq+1:2*nptotq), vel_EC, 'vel' )
+     open(1111, file='init_pos3.txt', action='write', status='unknown')
+     open(1112, file='init_vel3.txt', action='write', status='unknown')
+     do i = 1, atoms_UC
+     do n = 1, ncells_tot
+       write(1111,'(3(g22.14,1x))') pos_EC(i,:,n)
+       write(1112,'(3(g22.14,1x))') vel_EC(i,:,n)
+     end do
+     end do
+     close(1111)
+     close(1112)
+
+
+
+stop
+
+
+
+
+
+
+
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!  ND RUN
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   ! loop over steps
   do step = 1, runsteps
      
@@ -169,7 +261,7 @@ subroutine run_nd
      
      ! check for errors in dvode
      if ( ISTATE < 0 ) then
-        write(0,*) error_string, 'DVODE exited with error (ISTATE=): ', ISTATE, '.'
+        write(0,*) error_string, 'DVODE exited with an error (ISTATE=): ', ISTATE, '.'
         write(0,*) error_string, 'This usually means bad settings or bad input files.'
         write(0,*) error_string, 'Check the dvode.f subroutine for more information.'
         stop

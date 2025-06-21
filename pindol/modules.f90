@@ -1,4 +1,4 @@
-! pindol version 1.0, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
+! pindol version 1.0.1, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
 !
 ! This program is free software; you can redistribute it and/or modify
 ! it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 !   - Paolo Nicolini (Czech Technical University in Prague), paolo.nicolini22@gmail.com
 module pars
   ! strings
-  character(6), parameter :: version = 'v1.0', output_format = 'g22.14', screen_format = 'f12.4'
+  character(6), parameter :: version = 'v1.0.1', output_format = 'g22.14', screen_format = 'f12.4'
   character(7), parameter :: error_string = 'ERROR: '
   character(9), parameter :: warning_string = 'WARNING: '
   ! a small number

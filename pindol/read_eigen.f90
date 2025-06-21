@@ -1,4 +1,4 @@
-! pindol version 1.0, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
+! pindol version 1.0.1, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
 !
 ! This program is free software; you can redistribute it and/or modify
 ! it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ subroutine read_eigen
      stop
   end if
   if ( nq_tmp /= nq ) then
-     write(0,*) error_string, 'NQ reported in "qmatrix.nd" differs from what is provided in REFCONF.'
+     write(0,*) error_string, 'NQ reported in "qmatrix.nd" differs from what provided in REFCONF.'
      stop
   end if
 
@@ -192,7 +192,7 @@ subroutine read_eigen
      ! - in general, the code accepts only points that have components in the interval (-1/2,1/2]
      if ( vec_red(k,1) < -0.5d0 .or. vec_red(k,2) < -0.5d0 .or. vec_red(k,3) < -0.5d0 .or. &
           abs(vec_red(k,1)+0.5d0) < tiny .or. abs(vec_red(k,2)+0.5d0) < tiny .or. abs(vec_red(k,3)+0.5d0) < tiny ) then
-        write(0,*) error_string, 'A q-point has at least a component equal to or smaller than -1/2.'
+        write(0,*) error_string, 'A q-point has at least a component equal or smaller than -1/2.'
         stop
      end if
      if ( vec_red(k,1) > 0.5d0 .or. vec_red(k,2) > 0.5d0 .or. vec_red(k,3) > 0.5d0 ) then
@@ -223,27 +223,73 @@ subroutine read_eigen
      if ( k /= npG .and. k <= npG+npH ) then
         ! - check that q-points are not duplicated
         do kk = npG+1, k-1
-           if ( abs(vec_red(k,1)-vec_red(kk,1)) < tiny .and. abs(vec_red(k,2)-vec_red(kk,2)) < tiny .and. &
-                abs(vec_red(k,3)-vec_red(kk,3)) < tiny ) then
+           if ( ( abs(abs(vec_red(k,1)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,1)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,2)-vec_red(kk,2)) < tiny ) .and. ( abs(vec_red(k,3)-vec_red(kk,3)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H is duplicated.'
+              stop
+           else if ( ( abs(abs(vec_red(k,2)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,2)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,1)-vec_red(kk,1)) < tiny ) .and. ( abs(vec_red(k,3)-vec_red(kk,3)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H is duplicated.'
+              stop
+           else if ( ( abs(abs(vec_red(k,3)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,3)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,2)-vec_red(kk,2)) < tiny ) .and. ( abs(vec_red(k,1)-vec_red(kk,1)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H is duplicated.'
+              stop
+           else if ( ( abs(abs(vec_red(k,1)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,1)) - 0.5d0) < tiny ) .and. &
+              ( abs(abs(vec_red(k,2)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,2)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,3)-vec_red(kk,3)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H is duplicated.'
+              stop
+           else if ( ( abs(abs(vec_red(k,1)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,1)) - 0.5d0) < tiny ) .and. &
+               ( abs(abs(vec_red(k,3)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,3)) - 0.5d0) < tiny ) .and. &
+               ( abs(vec_red(k,2)-vec_red(kk,2)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H is duplicated.'
+              stop
+           else if ( ( abs(abs(vec_red(k,2)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,2)) - 0.5d0) < tiny ) .and. &
+              ( abs(abs(vec_red(k,3)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,3)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,1)-vec_red(kk,1)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H is duplicated.'
+           else if ( ( abs(abs(vec_red(k,1)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,1)) - 0.5d0) < tiny ) .and. &
+              ( abs(abs(vec_red(k,2)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,2)) - 0.5d0) < tiny ) .and. &
+              ( abs(abs(vec_red(k,3)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,3)) - 0.5d0) < tiny ) ) then
               write(0,*) error_string, 'A q-point in the set H is duplicated.'
               stop
            end if
         end do
         ! - check that q-points are unique, i.e. no complex-conjugates
         do kk = npG+1, k-1
-           if ( abs(vec_red(k,1)+vec_red(kk,1)) < tiny .and. abs(vec_red(k,2)+vec_red(kk,2)) < tiny .and. &
-                abs(vec_red(k,3)+vec_red(kk,3)) < tiny ) then
+           ! if one of the component is 1/2 and the other corresponding ones are opposite, then the two vectors are a conjugated couple;
+           ! for example, q1(1/2,1/4,0) is conjugated couple with q2=-q1=(-1/2,-1/4,0). However, q3=(1/2,-1/4,0) is equivalent to q2 because of
+           ! the periodicity of the Brillouin zone, as 1/2=-1/2, so q1 and q3 are conjugated couple too.
+           if ( ( abs(abs(vec_red(k,1)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,1)) - 0.5d0) < tiny ) .and. &
+                ( abs(vec_red(k,2)+vec_red(kk,2)) < tiny ) .and. ( abs(vec_red(k,3)+vec_red(kk,3)) < tiny ) ) then
+                write(0,*) error_string, 'A q-point in the set H and its complex-conjugated are provided.'
+                stop
+           else if ( ( abs(abs(vec_red(k,2)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,2)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,1)+vec_red(kk,1)) < tiny ) .and. ( abs(vec_red(k,3)+vec_red(kk,3)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H and its complex-conjugated are provided.'
+              stop
+           else if ( ( abs(abs(vec_red(k,3)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,3)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,2)+vec_red(kk,2)) < tiny ) .and. ( abs(vec_red(k,1)+vec_red(kk,1)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H and its complex-conjugated are provided.'
+              stop
+
+           else if ( ( abs(abs(vec_red(k,1)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,1)) - 0.5d0) < tiny ) .and. &
+              ( abs(abs(vec_red(k,2)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,2)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,3)+vec_red(kk,3)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H and its complex-conjugated are provided.'
+              stop
+           else if ( ( abs(abs(vec_red(k,1)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,1)) - 0.5d0) < tiny ) .and. &
+              ( abs(abs(vec_red(k,3)) - 0.5d0) < tiny ) .and. ( abs(abs(vec_red(kk,3)) - 0.5d0) < tiny ) .and. &
+              ( abs(vec_red(k,2)+vec_red(kk,2)) < tiny ) ) then
+              write(0,*) error_string, 'A q-point in the set H and its complex-conjugated are provided.'
+              stop
+           else if ( abs(vec_red(k,1)+vec_red(kk,1)) < tiny .and. abs(vec_red(k,2)+vec_red(kk,2)) < tiny .and. &
+              abs(vec_red(k,3)+vec_red(kk,3)) < tiny ) then
               write(0,*) error_string, 'A q-point in the set H and its complex-conjugated are provided.'
               stop
            end if
         end do
-     end if
-     !
-     ! - if present, q-points in the set S must have no component equal to 1/2
-     if ( k > npG+npH .and. ( abs(vec_red(k,1)-0.5d0) < tiny .or. abs(vec_red(k,2)-0.5d0) < tiny .or. &
-          abs(vec_red(k,3)-0.5d0) < tiny ) ) then
-        write(0,*) error_string, 'A q-point in the set S has at least one component equal to 1/2.'
-        stop
      end if
      !
      ! for the set S:

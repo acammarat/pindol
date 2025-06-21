@@ -1,4 +1,4 @@
-! pindol version 1.0, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
+! pindol version 1.0.1, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
 !
 ! This program is free software; you can redistribute it and/or modify
 ! it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ subroutine read_restart
   ! read the number of atomic types
   read(readrestart_unit,*) atom_types_tmp
   if ( atom_types_tmp /= atom_types ) then
-     write(0,*) error_string, 'The number of atomic types in the restart file does not match what is reported in the input.'
+     write(0,*) error_string, 'The number of atomic types in the restart file does not match what reported in the input.'
      stop
   end if
 
@@ -72,7 +72,7 @@ subroutine read_restart
 
      ! check if the mass coincides
      if ( abs(mass_pertype_tmp-mass_pertype(i)) > tiny ) then
-        write(0,*) error_string, 'The atomic masses in the restart file do not match what is reported in the input.'
+        write(0,*) error_string, 'The atomic masses in the restart file do not match what reported in the input.'
         stop
      end if
 
@@ -102,7 +102,7 @@ subroutine read_restart
   do i = 1, 3
      do j = 1, 3
         if ( abs(side_EC_tmp(i,j)-side_EC(i,j)) > tiny ) then
-           write(0,*) error_string, 'Sizes of the supercell are not consistent with the reference cell provided.'
+           write(0,*) error_string, 'Sizes of the supercell not consistent with the reference cell provided.'
            stop
         end if
      end do

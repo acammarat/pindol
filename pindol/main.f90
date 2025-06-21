@@ -1,4 +1,4 @@
-! pindol version 1.0, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
+! pindol version 1.0.1, Copyright (C) 2023 P. Nicolini, A. Cammarata, M. Dašić
 !
 ! This program is free software; you can redistribute it and/or modify
 ! it under the terms of the GNU General Public License as published by
@@ -18,6 +18,16 @@
 ! it also compute and print the execution walltime
 ! Contributors:
 !   - Paolo Nicolini (Czech Technical University in Prague), paolo.nicolini22@gmail.com
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! v 1.0.1
+! - corrected a bug when treating q-points at the border of the Brillouin zone
+!
+! v 1.0
+! - first production release
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 program main
   use pars, only: version, screen_format
   use flags, only: nd_flag, readrestart_flag, writerestart_flag, finalconf_flag, initconf_flag, initvel_flag, distort_flag
