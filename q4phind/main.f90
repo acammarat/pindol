@@ -30,6 +30,9 @@
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
+! v 0.3
+! - corrected a bug when treating q-points at the border of the Brillouin zone
+!
 ! v 0.2
 ! - added check on complex conjugated couples and identical vectors
 !   for the border zone cases
@@ -51,7 +54,7 @@
 module var
 
   ! global parameters
-  character(3), parameter :: version='0.2'
+  character(3), parameter :: version='0.3'
   character(7), parameter :: progname = 'Q4PHIND'
   ! init
   integer,save  :: npG, npH, npS, nptot, npinp, npopt

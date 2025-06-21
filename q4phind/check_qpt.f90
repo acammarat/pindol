@@ -36,6 +36,7 @@ use var, only: npG, npH, npS, nptot, vec_inp, vec_red, npinp
 
   integer :: i, k
   real(8), parameter :: toldelta = 1.d-4
+  real(8) :: qHcheck(3)
   logical :: wrongq_fl
   logical :: qrem_fl(npinp)
 !  logical, allocatable :: qrem_fl(:)
@@ -59,8 +60,6 @@ use var, only: npG, npH, npS, nptot, vec_inp, vec_red, npinp
     stop
   end if
 
-!  allocate (qrem_fl(npinp), stat=i)
-!  if (i/=0) stop 'Allocation failed for qrem_fl'
   qrem_fl(:) = .false.
 
   do i = 1, npinp-1
@@ -71,66 +70,83 @@ use var, only: npG, npH, npS, nptot, vec_inp, vec_red, npinp
            ( abs(vec_inp(k,3)+vec_inp(i,3)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are a conjugated couple: the latter will be removed'
         qrem_fl(k) = .true.
-      ! specific check for zone border
-      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(vec_inp(k,2)+vec_inp(i,2)) < toldelta ) .and. &
+      ! check for conjugated couples at zone border:
+      ! if one of the component is 1/2 and the other corresponding ones are opposite, then the two vectors are a conjugated couple;
+      ! for example, q1(1/2,1/4,0) is conjugated couple with q2=-q1=(-1/2,-1/4,0). However, q3=(1/2,-1/4,0) is equivalent to q2 because of
+      ! the periodicity of the Brillouin zone, as 1/2=-1/2, so q1 and q3 are conjugated couple too.
+      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(vec_inp(k,2)+vec_inp(i,2)) < toldelta ) .and. &
            ( abs(vec_inp(k,3)+vec_inp(i,3)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are a conjugated couple: the latter will be removed'
         qrem_fl(k) = .true.
-      else if ( ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(vec_inp(k,1)+vec_inp(i,1)) < toldelta ) .and. &
+      else if ( ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(vec_inp(k,1)+vec_inp(i,1)) < toldelta ) .and. &
            ( abs(vec_inp(k,3)+vec_inp(i,3)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are a conjugated couple: the latter will be removed'
         qrem_fl(k) = .true.
-      else if ( ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(vec_inp(k,2)+vec_inp(i,2)) < toldelta ) .and. &
+      else if ( ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(vec_inp(k,2)+vec_inp(i,2)) < toldelta ) .and. &
            ( abs(vec_inp(k,1)+vec_inp(i,1)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are a conjugated couple: the latter will be removed'
         qrem_fl(k) = .true.
 
-      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
+      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
            ( abs(vec_inp(k,3)+vec_inp(i,3)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are a conjugated couple: the latter will be removed'
         qrem_fl(k) = .true.
-      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
+      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
            ( abs(vec_inp(k,2)+vec_inp(i,2)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are a conjugated couple: the latter will be removed'
         qrem_fl(k) = .true.
-      else if ( ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
+      else if ( ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
            ( abs(vec_inp(k,1)+vec_inp(i,1)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are a conjugated couple: the latter will be removed'
         qrem_fl(k) = .true.
+
 
       ! check for identical vectors
       else if ( ( abs(vec_inp(k,1)-vec_inp(i,1)) < toldelta ) .and. ( abs(vec_inp(k,2)-vec_inp(i,2)) < toldelta ) .and. &
            ( abs(vec_inp(k,3)-vec_inp(i,3)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are identical: the latter will be removed'
         qrem_fl(k) = .true.
-      ! specific check for zone border
-      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(vec_inp(k,2)-vec_inp(i,2)) < toldelta ) .and. &
+      ! check for identical vectors at zone border
+      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(vec_inp(k,2)-vec_inp(i,2)) < toldelta ) .and. &
            ( abs(vec_inp(k,3)-vec_inp(i,3)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are identical: the latter will be removed'
         qrem_fl(k) = .true.
-      else if ( ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(vec_inp(k,1)-vec_inp(i,1)) < toldelta ) .and. &
+      else if ( ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(vec_inp(k,1)-vec_inp(i,1)) < toldelta ) .and. &
            ( abs(vec_inp(k,3)-vec_inp(i,3)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are identical: the latter will be removed'
         qrem_fl(k) = .true.
-      else if ( ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(vec_inp(k,2)-vec_inp(i,2)) < toldelta ) .and. &
+      else if ( ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(vec_inp(k,2)-vec_inp(i,2)) < toldelta ) .and. &
            ( abs(vec_inp(k,1)-vec_inp(i,1)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are identical: the latter will be removed'
         qrem_fl(k) = .true.
 
-      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
+      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
            ( abs(vec_inp(k,3)-vec_inp(i,3)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are identical: the latter will be removed'
         qrem_fl(k) = .true.
-      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
+      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
            ( abs(vec_inp(k,2)-vec_inp(i,2)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are identical: the latter will be removed'
         qrem_fl(k) = .true.
-      else if ( ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
+      else if ( ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) .and. &
            ( abs(vec_inp(k,1)-vec_inp(i,1)) < toldelta ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are identical: the latter will be removed'
         qrem_fl(k) = .true.
 
-      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
+      else if ( ( abs(abs(vec_inp(k,1)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,1)) - 0.5d0) < tiny(1.d0) ) .and. &
+      ( abs(abs(vec_inp(k,2)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,2)) - 0.5d0) < tiny(1.d0) ) .and. &
            ( abs(abs(vec_inp(k,3)) - 0.5d0) < tiny(1.d0) ) .and. ( abs(abs(vec_inp(i,3)) - 0.5d0) < tiny(1.d0) ) ) then
         write(*,'(*(a))') '   vectors ',i2a(i),' and ',i2a(k), ' are identical: the latter will be removed'
         qrem_fl(k) = .true.
@@ -156,6 +172,7 @@ use var, only: npG, npH, npS, nptot, vec_inp, vec_red, npinp
     if ( .not. qrem_fl(i) ) then
       nptot = nptot + 1
       vec_red(nptot,:) = vec_inp(i,:)
+!      write(*,'(i2,1x,3(f15.10,1x))') i, vec_red(nptot,:)
     end if
   end do
 
@@ -163,9 +180,15 @@ use var, only: npG, npH, npS, nptot, vec_inp, vec_red, npinp
   npH = 0
   npS = 0
   do i = 1, nptot
+
+    ! q at the border of the Brillouin zone belongs to H only if its components are 0 or 1/2
+    ! if q belongs to H then qHcheck components are integer numbers
+    qHcheck(:) = 2.d0 * vec_red(i,:)
+
     if ( (abs(vec_red(i,1))<tiny(1.d0)) .and. (abs(vec_red(i,2))<tiny(1.d0)) .and. (abs(vec_red(i,3))<tiny(1.d0)) ) then
       npG = 1
-    else if ( (abs(abs(vec_red(i,1))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(i,2))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(i,3))-0.5d0)<tiny(1.d0)) ) then
+    else if ( (abs(qHcheck(1)-floor(qHcheck(1)))<tiny(1.d0)) .and. (abs(qHcheck(2)-floor(qHcheck(2)))<tiny(1.d0)) &
+              .and. (abs(qHcheck(3)-floor(qHcheck(3)))<tiny(1.d0)) ) then
       npH = npH + 1
     else
       npS = npS + 1
@@ -173,8 +196,5 @@ use var, only: npG, npH, npS, nptot, vec_inp, vec_red, npinp
   end do
 
   write(*,'(*(a))') '  Q-set composition: G ',i2a(npG),', H ',i2a(npH),', S ',i2a(npS)
-
-!  deallocate (qrem_fl, stat=i)
-!  if (i/=0) stop 'Deallocation failed for qrem_fl'
 
 end subroutine check_qpt

@@ -35,6 +35,7 @@ use functions, only: i2a
 use var, only: npG, npH, npS, nptot, vec_red
 
   integer :: i, iord
+  real(8) :: qHcheck(3)
   logical, allocatable :: vec_ord_fl(:)
   
   allocate (vec_ord_fl(nptot), stat=i)
@@ -48,6 +49,11 @@ use var, only: npG, npH, npS, nptot, vec_red
   do 
     i = i + 1
     if ( i > nptot ) i = 1
+
+    ! q at the border of the Brillouin zone belongs to H only if its components are 0 or 1/2
+    ! if q belongs to H then qHcheck components are integer numbers
+    qHcheck(:) = 2.d0 * vec_red(i,:)
+
     ! look for GM
     if ( npG == 1 .and. (vec_ord_fl(1) .eqv. .false.) ) then
       if ( (abs(vec_red(i,1))<tiny(1.d0)) .and. (abs(vec_red(i,2))<tiny(1.d0)) .and. (abs(vec_red(i,3))<tiny(1.d0)) ) then
@@ -59,7 +65,8 @@ use var, only: npG, npH, npS, nptot, vec_red
       end if
     ! look for H
     else if ( npH >= 1 .and. (.not. all(vec_ord_fl(npG+1:npG+npH) .eqv. .true.)) ) then
-      if ( (abs(abs(vec_red(i,1))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(i,2))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(i,3))-0.5d0)<tiny(1.d0)) ) then
+      if ( (abs(qHcheck(1)-floor(qHcheck(1)))<tiny(1.d0)) .and. (abs(qHcheck(2)-floor(qHcheck(2)))<tiny(1.d0)) &
+           .and. (abs(qHcheck(3)-floor(qHcheck(3)))<tiny(1.d0)) ) then
         write(20,'(3(f20.15,1x))') vec_red(i,:) 
         iord = iord + 1
         vec_ord_fl(iord) = .true.
@@ -69,7 +76,9 @@ use var, only: npG, npH, npS, nptot, vec_red
     ! look for S
     else if ( npS >= 1 .and. (.not. all(vec_ord_fl(npG+npH+1:npG+npH+npS) .eqv. .true.)) ) then
       if ( .not. ((abs(vec_red(i,1))<tiny(1.d0)) .and. (abs(vec_red(i,2))<tiny(1.d0)) .and. (abs(vec_red(i,3))<tiny(1.d0))) .and. &
-           .not. ((abs(abs(vec_red(i,1))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(i,2))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red(i,3))-0.5d0)<tiny(1.d0))) ) then
+           .not. ((abs(qHcheck(1)-floor(qHcheck(1)))<tiny(1.d0)) .and. (abs(qHcheck(2)-floor(qHcheck(2)))<tiny(1.d0)) .and. &
+           (abs(qHcheck(3)-floor(qHcheck(3)))<tiny(1.d0))) &
+           ) then
         write(20,'(3(f20.15,1x))') vec_red(i,:) 
         iord = iord + 1
         vec_ord_fl(iord) = .true.

@@ -36,6 +36,7 @@ use var, only: vec_opt, vec_red, npG, npH, npS, nptot, &
         npopt, vec_red_opt
 
   integer :: i, j, k, l, iord
+  real(8) :: qHcheck(3)
   logical, allocatable :: vec_ord_fl(:)
 
   npopt = nptot
@@ -58,22 +59,12 @@ use var, only: vec_opt, vec_red, npG, npH, npS, nptot, &
     do j = i, nptot
       k = k + 1
       vec_opt(k,:) = -vec_red(i,:)-vec_red(j,:)
-!  write(*,'(i3,9(f10.6,1x))') k, vec_opt(k,:), vec_red(i,:), vec_red(j,:)
-!      vec_opt(K,:) = 1.d0 - sign(vec_opt(k,:),vec_opt(k,:))
       do l = 1, 3
         if ( vec_opt(k,l) > 0.5d0 ) vec_opt(k,l) = 1.d0 - vec_opt(k,l)
         if ( vec_opt(k,l) <= -0.5d0 ) vec_opt(k,l) = vec_opt(k,l) + 1.d0
       end do
     end do
   end do
-
-!open(200,file='qopt_test.nd',action='write')
-!
-!do i = 1, npopt
-!  write(200,'(i3,3(f10.6,1x))') i, vec_opt(i,:)
-!end do
-!close(200)
-!stop
 
   call check_qopt
 
@@ -88,9 +79,15 @@ use var, only: vec_opt, vec_red, npG, npH, npS, nptot, &
   do 
     i = i + 1
     if ( i > nptot ) i = 1
+
+    ! q at the border of the Brillouin zone belongs to H only if its components are 0 or 1/2
+    ! if q belongs to H then qHcheck components are integer numbers
+    qHcheck(:) = 2.d0 * vec_red_opt(i,:)
+
     ! look for GM
     if ( npG == 1 .and. (vec_ord_fl(1) .eqv. .false.) ) then
-      if ( (abs(vec_red_opt(i,1))<tiny(1.d0)) .and. (abs(vec_red_opt(i,2))<tiny(1.d0)) .and. (abs(vec_red_opt(i,3))<tiny(1.d0)) ) then
+      if ( (abs(vec_red_opt(i,1))<tiny(1.d0)) .and. (abs(vec_red_opt(i,2))<tiny(1.d0)) .and. &
+      (abs(vec_red_opt(i,3))<tiny(1.d0)) ) then
         do j = 1, 3
           if ( abs(vec_red_opt(i,j)) < tiny(1.d0) ) vec_red_opt(i,j) = 0.d0
         end do
@@ -102,7 +99,8 @@ use var, only: vec_opt, vec_red, npG, npH, npS, nptot, &
       end if
     ! look for H
     else if ( npH >= 1 .and. (.not. all(vec_ord_fl(npG+1:npG+npH) .eqv. .true.)) ) then
-      if ( (abs(abs(vec_red_opt(i,1))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red_opt(i,2))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red_opt(i,3))-0.5d0)<tiny(1.d0)) ) then
+      if ( (abs(qHcheck(1)-floor(qHcheck(1)))<tiny(1.d0)) .and. (abs(qHcheck(2)-floor(qHcheck(2)))<tiny(1.d0)) &
+           .and. (abs(qHcheck(3)-floor(qHcheck(3)))<tiny(1.d0)) ) then
         do j = 1, 3
           if ( abs(vec_red_opt(i,j)) < tiny(1.d0) ) vec_red_opt(i,j) = 0.d0
         end do
@@ -114,8 +112,11 @@ use var, only: vec_opt, vec_red, npG, npH, npS, nptot, &
       end if
     ! look for S
     else if ( npS >= 1 .and. (.not. all(vec_ord_fl(npG+npH+1:npG+npH+npS) .eqv. .true.)) ) then
-      if ( .not. ((abs(vec_red_opt(i,1))<tiny(1.d0)) .and. (abs(vec_red_opt(i,2))<tiny(1.d0)) .and. (abs(vec_red_opt(i,3))<tiny(1.d0))) .and. &
-           .not. ((abs(abs(vec_red_opt(i,1))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red_opt(i,2))-0.5d0)<tiny(1.d0)) .or. (abs(abs(vec_red_opt(i,3))-0.5d0)<tiny(1.d0))) ) then
+      if ( .not. ((abs(vec_red_opt(i,1))<tiny(1.d0)) .and. (abs(vec_red_opt(i,2))<tiny(1.d0)) .and. &
+      (abs(vec_red_opt(i,3))<tiny(1.d0))) .and. &
+           .not. ((abs(qHcheck(1)-floor(qHcheck(1)))<tiny(1.d0)) .and. (abs(qHcheck(2)-floor(qHcheck(2)))<tiny(1.d0)) &
+           .and. (abs(qHcheck(3)-floor(qHcheck(3)))<tiny(1.d0))) &
+           ) then
         do j = 1, 3
           if ( abs(vec_red_opt(i,j)) < tiny(1.d0) ) vec_red_opt(i,j) = 0.d0
         end do
